@@ -9,7 +9,9 @@
     "Londiuh"
   ],
   "contact": {
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/Londiuh/login",
+    "sources": "https://github.com/Londiuh/login",
+    "issues": "https://github.com/Londiuh/login/issues"
   },
 
   "license": "MIT",
