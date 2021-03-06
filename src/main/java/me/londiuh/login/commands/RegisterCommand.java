@@ -8,6 +8,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import static net.minecraft.server.command.CommandManager.literal;
 import static net.minecraft.server.command.CommandManager.argument;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 
 public class RegisterCommand {
@@ -17,7 +18,8 @@ public class RegisterCommand {
                     .then(argument("confirmPassword", StringArgumentType.word())
                         .executes(ctx -> {
                             String password = StringArgumentType.getString(ctx, "newPassword");
-                            String username = ctx.getSource().getPlayer().getEntityName();
+                            ServerPlayerEntity player = ctx.getSource().getPlayer();
+                            String username = player.getEntityName();
                             if (RegisteredPlayersJson.isPlayerRegistered(username)) {
                                 ctx.getSource().sendFeedback(new LiteralText("§cYou're already registered! Use /login instead."), false);
                                 return 1;
