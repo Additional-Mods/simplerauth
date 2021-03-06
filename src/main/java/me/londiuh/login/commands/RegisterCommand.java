@@ -32,6 +32,7 @@ public class RegisterCommand {
                             RegisteredPlayersJson.save(uuid, username, password);
                             PlayerLogin playerLogin = LoginMod.getPlayer(ctx.getSource().getPlayer());
                             playerLogin.setLoggedIn(true);
+                            player.setInvulnerable(false);
                             ctx.getSource().sendFeedback(new LiteralText("§aSuccessfully registered."), false);
                             return 1;
         }))));
