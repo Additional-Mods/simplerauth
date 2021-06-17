@@ -1,8 +1,10 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.londiuh.login.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "package": "com.dqu.authmod.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+  ],
   "server": [
     "PlayerManagerMixin",
     "ServerPlayNetworkHandlerMixin"
