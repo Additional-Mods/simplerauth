@@ -5,14 +5,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 
 public class DbManager {
-    private static final File dbfile = new File("database.json");
+    private static final Path pathdbfile = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-database.json");
+    private static final File dbfile = new File(String.valueOf(pathdbfile));
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static JsonArray db = new JsonArray();
 
@@ -62,8 +65,7 @@ public class DbManager {
         if (!dbfile.exists()) return;
         try {
             BufferedReader bufferedReader = Files.newReader(dbfile, StandardCharsets.UTF_8);
-            JsonArray json = gson.fromJson(bufferedReader, JsonArray.class);
-            db = json;
+            db = gson.fromJson(bufferedReader, JsonArray.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
