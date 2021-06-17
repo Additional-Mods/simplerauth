@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayNetworkHandler.class)
-public abstract class ServerPlayNetworkHandlerMixin {
+public class ServerPlayNetworkHandlerMixin {
     @Inject(method = "onPlayerMove", at = @At("HEAD"), cancellable = true)
     public void onPlayerMove(PlayerMoveC2SPacket packet, CallbackInfo ci) {
         boolean canMove = OnPlayerMove.canMove((ServerPlayNetworkHandler) (Object) this);
