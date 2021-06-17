@@ -14,8 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
 public class DbManager {
-    private static final Path pathdbfile = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-database.json");
-    private static final File dbfile = new File(String.valueOf(pathdbfile));
+    private static final String pathdbfile = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-database.json").toString();
+    private static final File dbfile = new File(pathdbfile);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static JsonArray db = new JsonArray();
 
