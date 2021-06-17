@@ -1,29 +1,30 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "simplerauth",
   "version": "${version}",
 
-  "name": "AuthMod",
-  "description": "pp",
+  "name": "Simpler Auth",
+  "description": "A mod for protecting your players accounts by registration.",
   "authors": [
-    "dqu1j"
+    "Dqu1J",
+    "Londiuh"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/Dqu1J/login/"
   },
 
   "license": "MIT",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/simplerauth/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.dqu.authmod.AuthMod"
+      "com.dqu.simplerauth.AuthMod"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "simplerauth.mixins.json"
   ],
 
   "depends": {

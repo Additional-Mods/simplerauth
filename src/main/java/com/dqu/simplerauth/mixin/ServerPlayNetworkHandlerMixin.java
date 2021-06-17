@@ -1,8 +1,8 @@
-package com.dqu.authmod.mixin;
+package com.dqu.simplerauth.mixin;
 
-import com.dqu.authmod.listeners.OnGameMessage;
-import com.dqu.authmod.listeners.OnPlayerAction;
-import com.dqu.authmod.listeners.OnPlayerMove;
+import com.dqu.simplerauth.listeners.OnGameMessage;
+import com.dqu.simplerauth.listeners.OnPlayerAction;
+import com.dqu.simplerauth.listeners.OnPlayerMove;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;

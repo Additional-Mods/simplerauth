@@ -1,4 +1,4 @@
-package com.dqu.authmod;
+package com.dqu.simplerauth;
 
 import com.google.common.io.Files;
 import com.google.gson.Gson;

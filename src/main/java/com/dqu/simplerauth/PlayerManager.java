@@ -1,4 +1,4 @@
-package com.dqu.authmod;
+package com.dqu.simplerauth;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 

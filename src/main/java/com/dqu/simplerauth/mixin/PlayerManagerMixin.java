@@ -1,7 +1,7 @@
-package com.dqu.authmod.mixin;
+package com.dqu.simplerauth.mixin;
 
-import com.dqu.authmod.listeners.OnPlayerConnect;
-import com.dqu.authmod.listeners.OnPlayerLeave;
+import com.dqu.simplerauth.listeners.OnPlayerConnect;
+import com.dqu.simplerauth.listeners.OnPlayerLeave;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;

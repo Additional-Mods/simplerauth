@@ -1,7 +1,7 @@
-package com.dqu.authmod.listeners;
+package com.dqu.simplerauth.listeners;
 
-import com.dqu.authmod.AuthMod;
-import com.dqu.authmod.PlayerObject;
+import com.dqu.simplerauth.AuthMod;
+import com.dqu.simplerauth.PlayerObject;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;

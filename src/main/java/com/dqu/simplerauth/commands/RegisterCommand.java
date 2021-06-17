@@ -1,8 +1,8 @@
-package com.dqu.authmod.commands;
+package com.dqu.simplerauth.commands;
 
-import com.dqu.authmod.AuthMod;
-import com.dqu.authmod.DbManager;
-import com.dqu.authmod.PlayerObject;
+import com.dqu.simplerauth.AuthMod;
+import com.dqu.simplerauth.DbManager;
+import com.dqu.simplerauth.PlayerObject;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.server.command.ServerCommandSource;

@@ -1,6 +1,6 @@
-package com.dqu.authmod;
+package com.dqu.simplerauth;
 
-import com.dqu.authmod.commands.*;
+import com.dqu.simplerauth.commands.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 
