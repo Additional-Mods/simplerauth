@@ -9,7 +9,8 @@ public class AuthMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        DbManager.loadDatabase();
+        DbManager.loadDatabase(); // Loads password database
+        LangManager.loadTranslations("en"); // Loads translations
         CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
             LoginCommand.registerCommand(dispatcher);
             RegisterCommand.registerCommand(dispatcher);

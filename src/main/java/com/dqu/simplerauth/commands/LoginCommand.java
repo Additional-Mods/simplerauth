@@ -2,12 +2,12 @@ package com.dqu.simplerauth.commands;
 
 import com.dqu.simplerauth.AuthMod;
 import com.dqu.simplerauth.DbManager;
+import com.dqu.simplerauth.LangManager;
 import com.dqu.simplerauth.PlayerObject;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -22,7 +22,7 @@ public class LoginCommand {
                     ServerPlayerEntity player = ctx.getSource().getPlayer();
 
                     if (!DbManager.isPlayerRegistered(username)) {
-                        ctx.getSource().sendFeedback(new TranslatableText("command.login.notregistered"), false);
+                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.notregistered"), false);
                         return 1;
                     }
 
@@ -30,9 +30,9 @@ public class LoginCommand {
                         PlayerObject playerObject = AuthMod.playerManager.get(player);
                         playerObject.authenticate();
                         if (!player.isCreative()) player.setInvulnerable(false);
-                        ctx.getSource().sendFeedback(new TranslatableText("command.login.success"), false);
+                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.success"), false);
                     } else {
-                        ctx.getSource().sendFeedback(new TranslatableText("command.login.wrongpassword"), false);
+                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.wrongpassword"), false);
                     }
 
                     return 1;
