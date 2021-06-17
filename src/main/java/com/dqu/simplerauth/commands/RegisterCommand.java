@@ -7,7 +7,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -24,12 +24,12 @@ public class RegisterCommand {
                         String username = player.getEntityName();
 
                         if (DbManager.isPlayerRegistered(username)) {
-                            ctx.getSource().sendFeedback(new LiteralText("§cВы уже зарегестрированы! Используйте /login"), false);
+                            ctx.getSource().sendFeedback(new TranslatableText("command.register.alreadyregistered"), false);
                             return 1;
                         }
 
                         if (!password.equals(passwordRepeat)) {
-                            ctx.getSource().sendFeedback(new LiteralText("§cПароли не совпадают!"), false);
+                            ctx.getSource().sendFeedback(new TranslatableText("command.register.passwordrepeatwrong"), false);
                             return 1;
                         }
 
@@ -37,7 +37,7 @@ public class RegisterCommand {
                         PlayerObject playerObject = AuthMod.playerManager.get(player);
                         playerObject.authenticate();
                         if (!player.isCreative()) player.setInvulnerable(false);
-                        ctx.getSource().sendFeedback(new LiteralText("§aУспешно зарегестрировано!"), false);
+                        ctx.getSource().sendFeedback(new TranslatableText("command.register.success"), false);
                         return 1;
                     })
                 )

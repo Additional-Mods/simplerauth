@@ -1,0 +1,9 @@
+{
+  "command.login.notregistered": "§cВы не зарегестрированы! Используйте §f/register",
+  "command.login.success": "§aВы успешно вошли!",
+  "command.login.wrongpassword": "§cНеверный пароль!",
+  "command.register.alreadyregistered": "§cВы уже зарегестрированы! Используйте §f/login",
+  "command.register.passwordrepeatwrong": "§cПароли не совпадают!",
+  "command.register.success": "§aВы успешно вошли!",
+  "player.connect.authenticate": "§6Пожалуйста, войдите! Используйте §f/login §6или §f/register§6."
+}

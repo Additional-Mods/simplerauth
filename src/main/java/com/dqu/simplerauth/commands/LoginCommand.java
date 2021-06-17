@@ -7,7 +7,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -22,7 +22,7 @@ public class LoginCommand {
                     ServerPlayerEntity player = ctx.getSource().getPlayer();
 
                     if (!DbManager.isPlayerRegistered(username)) {
-                        ctx.getSource().sendFeedback(new LiteralText("§cВы ещё не зарегестрированы! Используйте: /register <пароль> <пароль>"), false);
+                        ctx.getSource().sendFeedback(new TranslatableText("command.login.notregistered"), false);
                         return 1;
                     }
 
@@ -30,9 +30,9 @@ public class LoginCommand {
                         PlayerObject playerObject = AuthMod.playerManager.get(player);
                         playerObject.authenticate();
                         if (!player.isCreative()) player.setInvulnerable(false);
-                        ctx.getSource().sendFeedback(new LiteralText("§aВы вошли в ваш аккаунт."), false);
+                        ctx.getSource().sendFeedback(new TranslatableText("command.login.success"), false);
                     } else {
-                        ctx.getSource().sendFeedback(new LiteralText("§cНеверный пароль!"), false);
+                        ctx.getSource().sendFeedback(new TranslatableText("command.login.wrongpassword"), false);
                     }
 
                     return 1;
