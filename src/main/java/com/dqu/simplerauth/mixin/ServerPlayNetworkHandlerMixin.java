@@ -32,6 +32,11 @@ public class ServerPlayNetworkHandlerMixin {
         boolean canInteract = OnPlayerAction.canInteract(networkHandler);
         if (!canInteract) {
             ci.cancel();
+            
+            /*
+                Sends a block update packet to the client
+                Prevents desync between client and server when breaking or placing blocks
+            */
             BlockPos blockPos = packet.getPos();
             ServerPlayerEntity player = networkHandler.getPlayer();
             Packet packet1 = new BlockUpdateS2CPacket(player.world, blockPos);
