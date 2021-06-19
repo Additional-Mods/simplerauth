@@ -6,8 +6,18 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
+      - '.gitignore'
+      - 'LICENSE'
   pull_request:
     branches: [ master ]
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
+      - '.gitignore'
+      - 'LICENSE'
 
 jobs:
   build:
