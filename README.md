@@ -18,3 +18,5 @@ Until player logins, it won't be able to:
 - Destroy or place blocks
 - Throw items
 - Move or rotate
+
+[Modrinth](https://modrinth.com/mod/simpler-auth)
