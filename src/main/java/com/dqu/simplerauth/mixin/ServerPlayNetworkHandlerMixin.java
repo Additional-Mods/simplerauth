@@ -77,6 +77,8 @@ public class ServerPlayNetworkHandlerMixin {
 
         ServerPlayerEntity player = networkHandler.getPlayer();
         int slot = packet.getSlot();
+        if (slot < 0) return; // Clicked outside of the inventory
+
         ItemStack stack = player.getInventory().getStack(slot);
         // ^ packet.getStack() can cause desync
 
