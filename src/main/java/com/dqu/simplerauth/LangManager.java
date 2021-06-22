@@ -29,6 +29,9 @@ public class LangManager {
             lang.put("command.register.alreadyregistered", "§cВы уже зарегестрированы! Используйте §f/login");
             lang.put("command.register.passwordrepeatwrong", "§cПароли не совпадают!");
             lang.put("command.register.success", "§aВы успешно вошли!");
+            lang.put("command.changepassword.notregistered", "§cВы не зарегестрированы!");
+            lang.put("command.changepassword.wrongpassword", "§cПароли не совпадают!");
+            lang.put("command.changepassword.success", "§aВы успешно изменили пароль!");
             lang.put("player.connect.authenticate", "§6Пожалуйста, войдите! Используйте §f/login §6или §f/register§6.");
         } else {
             lang.put("command.login.notregistered", "§cYou are not registered! Use §f/register §cinstead.");
@@ -37,6 +40,9 @@ public class LangManager {
             lang.put("command.register.alreadyregistered", "§cYou are already registered! Use §f/login §cinstead.");
             lang.put("command.register.passwordrepeatwrong", "§cPasswords do not match!");
             lang.put("command.register.success", "§aAuthenticated successfully!");
+            lang.put("command.changepassword.notregistered", "§cYou are not registered!");
+            lang.put("command.changepassword.wrongpassword", "§cPasswords do not match!");
+            lang.put("command.changepassword.success", "§aChanged password successfully!");
             lang.put("player.connect.authenticate", "§6Please, authenticate! Use §f/login §6or §f/register§6.");
         }
     }

@@ -14,6 +14,7 @@ public class AuthMod implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
             LoginCommand.registerCommand(dispatcher);
             RegisterCommand.registerCommand(dispatcher);
+            ChangePasswordCommand.registerCommand(dispatcher);
         }));
     }
 }

@@ -50,6 +50,13 @@ public class DbManager {
         saveDatabase();
     }
 
+    public static void setPassword(String username, String password) {
+        JsonObject player = findPlayer(username);
+        if (player == null) return;
+        player.addProperty("password", password);
+        saveDatabase();
+    }
+
     private static void saveDatabase() {
         try {
             BufferedWriter bufferedWriter = Files.newWriter(dbfile, StandardCharsets.UTF_8);
