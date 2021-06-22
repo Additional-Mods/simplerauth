@@ -39,13 +39,15 @@ public class DbManager {
     public static boolean isPasswordCorrect(String username, String password) {
         JsonObject player = findPlayer(username);
         if (player == null) return false;
-        return player.get("password").getAsString().equals(password);
+        String hash = player.get("password").getAsString();
+        return PassManager.verify(password, hash);
     }
 
     public static void addPlayerDatabase(String username, String password) {
         JsonObject player = new JsonObject();
         player.addProperty("user", username);
-        player.addProperty("password", password);
+        String hashed = PassManager.encrypt(password);
+        player.addProperty("password", hashed);
         db.add(player);
         saveDatabase();
     }
@@ -53,7 +55,8 @@ public class DbManager {
     public static void setPassword(String username, String password) {
         JsonObject player = findPlayer(username);
         if (player == null) return;
-        player.addProperty("password", password);
+        String hashed = PassManager.encrypt(password);
+        player.addProperty("password", hashed);
         saveDatabase();
     }
 
