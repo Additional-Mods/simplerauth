@@ -1,11 +1,13 @@
 package com.dqu.simplerauth.mixin;
 
+import com.dqu.simplerauth.listeners.OnClickSlot;
 import com.dqu.simplerauth.listeners.OnGameMessage;
 import com.dqu.simplerauth.listeners.OnPlayerAction;
 import com.dqu.simplerauth.listeners.OnPlayerMove;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
+import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
@@ -64,5 +66,26 @@ public class ServerPlayNetworkHandlerMixin {
         if (!canSendMessage) {
             ci.cancel();
         }
+    }
+
+    @Inject(method = "onClickSlot", at = @At("HEAD"), cancellable = true)
+    public void onClickSlot(ClickSlotC2SPacket packet, CallbackInfo ci) {
+        ServerPlayNetworkHandler networkHandler = (ServerPlayNetworkHandler) (Object) this;
+        boolean canClickSlot = OnClickSlot.canClickSlot(networkHandler);
+        if (canClickSlot) return;
+        ci.cancel();
+
+        ServerPlayerEntity player = networkHandler.getPlayer();
+        int slot = packet.getSlot();
+        ItemStack stack = player.getInventory().getStack(slot);
+        // ^ packet.getStack() can cause desync
+
+        // Updates clicked slot and the cursor to prevent desync
+
+        Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, slot, stack);
+        Packet packet2 = new ScreenHandlerSlotUpdateS2CPacket(-1, -1, ItemStack.EMPTY);
+
+        networkHandler.sendPacket(packet1); // Updates inventory slot
+        networkHandler.sendPacket(packet2); // Updates cursor
     }
 }
