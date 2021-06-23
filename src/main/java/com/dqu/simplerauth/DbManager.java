@@ -1,63 +1,62 @@
 package com.dqu.simplerauth;
 
 import com.google.common.io.Files;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 
 public class DbManager {
-    private static final String pathdbfile = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-database.json").toString();
-    private static final File dbfile = new File(pathdbfile);
+    private static final String path = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-database.json").toString();
+    private static final File dbfile = new File(path);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static JsonArray db = new JsonArray();
+    private static JsonObject db = new JsonObject();
 
-    private static JsonObject findPlayer(String username) {
-        JsonObject player = null;
-        if (db.size() == 0) return null;
-        for (int i = 0; i < db.size(); i++) {
-            JsonObject iplayer = db.get(i).getAsJsonObject();
-            if (iplayer.get("user").getAsString().equals(username)) {
-                player = iplayer;
-                break;
-            }
+    public static void loadDatabase() {
+        if (!dbfile.exists()) {
+            db.addProperty("version", 1);
+            db.add("users", new JsonArray());
+            saveDatabase();
         }
-        return player;
-    }
 
-    public static boolean isPlayerRegistered(String username) {
-        return findPlayer(username) != null;
-    }
+        try {
+            BufferedReader bufferedReader = Files.newReader(dbfile, StandardCharsets.UTF_8);
+            db = gson.fromJson(bufferedReader, JsonObject.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    public static boolean isPasswordCorrect(String username, String password) {
-        JsonObject player = findPlayer(username);
-        if (player == null) return false;
-        String hash = player.get("password").getAsString();
-        return PassManager.verify(password, hash);
-    }
+        if (db.get("version") == null) {
+            // Convert the old database to a new format.
+            LogManager.getLogger().info("[SimplerAuth] Outdated database! The error above is normal. Converting to the new format, this may take a while.");
+            JsonArray users = new JsonArray();
 
-    public static void addPlayerDatabase(String username, String password) {
-        JsonObject player = new JsonObject();
-        player.addProperty("user", username);
-        String hashed = PassManager.encrypt(password);
-        player.addProperty("password", hashed);
-        db.add(player);
-        saveDatabase();
-    }
+            // Reload database in the old format
+            try {
+                BufferedReader bufferedReader = Files.newReader(dbfile, StandardCharsets.UTF_8);
+                users = gson.fromJson(bufferedReader, JsonArray.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-    public static void setPassword(String username, String password) {
-        JsonObject player = findPlayer(username);
-        if (player == null) return;
-        String hashed = PassManager.encrypt(password);
-        player.addProperty("password", hashed);
-        saveDatabase();
+            for (int i = 0; i < users.size(); i++) {
+                JsonObject user = users.get(i).getAsJsonObject();
+                String password = user.get("password").getAsString();
+                String hashed = PassManager.encrypt(password);
+                user.addProperty("password", hashed);
+            }
+
+            JsonObject newdb = new JsonObject();
+            newdb.addProperty("version", 1);
+            newdb.add("users", users);
+            db = newdb;
+            LogManager.getLogger().info("[SimplerAuth] Finished converting the database.");
+            saveDatabase();
+        }
     }
 
     private static void saveDatabase() {
@@ -71,13 +70,46 @@ public class DbManager {
         }
     }
 
-    public static void loadDatabase() {
-        if (!dbfile.exists()) return;
-        try {
-            BufferedReader bufferedReader = Files.newReader(dbfile, StandardCharsets.UTF_8);
-            db = gson.fromJson(bufferedReader, JsonArray.class);
-        } catch (Exception e) {
-            e.printStackTrace();
+    private static JsonObject getPlayer(String username) {
+        if (!dbfile.exists()) return null;
+        JsonArray users = db.get("users").getAsJsonArray();
+        if (users.size() == 0) return null;
+        for (int i = 0; i < db.size(); i++) {
+            JsonObject user = users.get(i).getAsJsonObject();
+            if (user.get("user").getAsString().equals(username)) {
+                return user;
+            }
         }
+        return null;
+    }
+
+    public static boolean isPlayerRegistered(String username) {
+        return getPlayer(username) != null;
+    }
+
+    public static void addPlayerDatabase(String username, String password) {
+        JsonArray users = db.get("users").getAsJsonArray();
+        if (isPlayerRegistered(username)) return;
+        JsonObject user = new JsonObject();
+        String hashed = PassManager.encrypt(password);
+        user.addProperty("user", username);
+        user.addProperty("password", hashed);
+        users.add(user);
+        saveDatabase();
+    }
+
+    public static boolean isPasswordCorrect(String username, String password) {
+        JsonObject user = getPlayer(username);
+        if (user == null) return false;
+        String hashed = user.get("password").getAsString();
+        return PassManager.verify(password, hashed);
+    }
+
+    public static void setPassword(String username, String password) {
+        JsonObject user = getPlayer(username);
+        if (user == null) return;
+        String hashed = PassManager.encrypt(password);
+        user.addProperty("password", hashed);
+        saveDatabase();
     }
 }
