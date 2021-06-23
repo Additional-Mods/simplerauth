@@ -47,7 +47,7 @@ public class ServerPlayNetworkHandlerMixin {
                 This action only gets triggered when dropping from the main hand
              */
             ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
-            Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, player.getInventory().getSlotWithStack(stack), stack);
+            Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, player.inventory.getSlotWithStack(stack), stack);
             networkHandler.sendPacket(packet1);
         } else {
             /*
