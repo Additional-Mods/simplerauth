@@ -10,6 +10,7 @@ After, it will need to login using the password it entered during registration.
 **Commands**
 - /login <password> : Login into your account
 - /register <password> <repeatPassword> : Register a new account
+- /changepassword <oldPassword> <newPassword> : Change your account password
 
 <br>
 
@@ -18,5 +19,8 @@ Until player logins, it won't be able to:
 - Destroy or place blocks
 - Throw items
 - Move or rotate
+- Modify their inventory
 
 [Modrinth](https://modrinth.com/mod/simpler-auth)
+[CurseForge]()
+  
