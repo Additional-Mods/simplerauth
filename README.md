@@ -20,6 +20,11 @@ Until player logins, it won't be able to:
 - Throw items
 - Move or rotate
 - Modify their inventory
+  
+**Version Support**
+1.17: Supported, active
+1.16: Supported
+1.15 or older: Not supported, won't port
 
 [Modrinth](https://modrinth.com/mod/simpler-auth)
 [CurseForge]()
