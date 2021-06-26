@@ -32,7 +32,7 @@ public class LoginCommand {
                         if (!player.isCreative()) player.setInvulnerable(false);
                         ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.success"), false);
                     } else {
-                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.wrongpassword"), false);
+                        player.networkHandler.disconnect(LangManager.getLiteralText("command.login.wrongpassword"));
                     }
 
                     return 1;
