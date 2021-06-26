@@ -29,7 +29,7 @@ public class RegisterCommand {
                         }
 
                         if (!password.equals(passwordRepeat)) {
-                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.register.passwordrepeatwrong"), false);
+                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);
                             return 1;
                         }
 
@@ -37,7 +37,7 @@ public class RegisterCommand {
                         PlayerObject playerObject = AuthMod.playerManager.get(player);
                         playerObject.authenticate();
                         if (!player.isCreative()) player.setInvulnerable(false);
-                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.register.success"), false);
+                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.authenticated"), false);
                         return 1;
                     })
                 )

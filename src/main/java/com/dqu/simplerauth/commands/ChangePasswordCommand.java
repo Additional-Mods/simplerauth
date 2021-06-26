@@ -27,7 +27,7 @@ public class ChangePasswordCommand {
                         }
 
                         if(!DbManager.isPasswordCorrect(username, oldPassword)) {
-                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.changepassword.wrongpassword"), false);
+                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);
                             return 1;
                         }
 

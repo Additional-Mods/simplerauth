@@ -20,6 +20,12 @@ public class LoginCommand {
                     String password = StringArgumentType.getString(ctx, "password");
                     String username = ctx.getSource().getPlayer().getEntityName();
                     ServerPlayerEntity player = ctx.getSource().getPlayer();
+                    PlayerObject playerObject = AuthMod.playerManager.get(player);
+
+                    if (playerObject.isAuthenticated()) {
+                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.alreadylogged"), false);
+                        return 1;
+                    }
 
                     if (!DbManager.isPlayerRegistered(username)) {
                         ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.notregistered"), false);
@@ -27,12 +33,11 @@ public class LoginCommand {
                     }
 
                     if (DbManager.isPasswordCorrect(username, password)) {
-                        PlayerObject playerObject = AuthMod.playerManager.get(player);
                         playerObject.authenticate();
                         if (!player.isCreative()) player.setInvulnerable(false);
-                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.success"), false);
+                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.authenticated"), false);
                     } else {
-                        player.networkHandler.disconnect(LangManager.getLiteralText("command.login.wrongpassword"));
+                        player.networkHandler.disconnect(LangManager.getLiteralText("command.general.notmatch"));
                     }
 
                     return 1;
