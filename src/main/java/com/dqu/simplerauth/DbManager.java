@@ -74,7 +74,7 @@ public class DbManager {
         if (!dbfile.exists()) return null;
         JsonArray users = db.get("users").getAsJsonArray();
         if (users.size() == 0) return null;
-        for (int i = 0; i < db.size(); i++) {
+        for (int i = 0; i < users.size(); i++) {
             JsonObject user = users.get(i).getAsJsonObject();
             if (user.get("user").getAsString().equals(username)) {
                 return user;
