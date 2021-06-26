@@ -20,12 +20,14 @@ Until player logins, it won't be able to:
 - Throw items
 - Move or rotate
 - Modify their inventory
-  
+
+<br>  
+
 **Version Support**
-1.17: Supported, active
-1.16: Supported
-1.15 or older: Not supported, won't port
+- ![](https://img.shields.io/badge/1.17.x-Supported-green)
+- ![](https://img.shields.io/badge/1.16.5-Not%20supported-important)
+- ![](https://img.shields.io/badge/1.16.4%3C-Not%20ported-red)
 
 [Modrinth](https://modrinth.com/mod/simpler-auth)
-[CurseForge]()
+[CurseForge](https://www.curseforge.com/minecraft/mc-mods/simpler-auth)
   
