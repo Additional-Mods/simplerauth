@@ -19,7 +19,7 @@ public class RegisterCommand {
                 .then(argument("repeatPassword", StringArgumentType.word())
                     .executes(ctx -> {
                         String password = StringArgumentType.getString(ctx, "password");
-                        String passwordRepeat = StringArgumentType.getString(ctx, "password");
+                        String passwordRepeat = StringArgumentType.getString(ctx, "repeatPassword");
                         ServerPlayerEntity player = ctx.getSource().getPlayer();
                         String username = player.getEntityName();
 

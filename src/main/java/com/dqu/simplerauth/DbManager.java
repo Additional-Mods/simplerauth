@@ -3,7 +3,6 @@ package com.dqu.simplerauth;
 import com.google.common.io.Files;
 import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;
-import org.apache.logging.log4j.LogManager;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,36 +10,37 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 public class DbManager {
-    private static final String path = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-database.json").toString();
-    private static final File dbfile = new File(path);
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public static final int VERSION = 1;
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static final String PATH = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-database.json").toString();
+    private static final File DBFILE = new File(PATH);
     private static JsonObject db = new JsonObject();
 
     public static void loadDatabase() {
-        if (!dbfile.exists()) {
-            db.addProperty("version", 1);
+        if (!DBFILE.exists()) {
+            db.addProperty("version", VERSION);
             db.add("users", new JsonArray());
             saveDatabase();
         }
 
         try {
-            BufferedReader bufferedReader = Files.newReader(dbfile, StandardCharsets.UTF_8);
-            db = gson.fromJson(bufferedReader, JsonObject.class);
+            BufferedReader bufferedReader = Files.newReader(DBFILE, StandardCharsets.UTF_8);
+            db = GSON.fromJson(bufferedReader, JsonObject.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            AuthMod.LOGGER.error(e);
         }
 
         if (db.get("version") == null) {
             // Convert the old database to a new format.
-            LogManager.getLogger().info("[SimplerAuth] Outdated database! The error above is normal. Converting to the new format, this may take a while.");
+            AuthMod.LOGGER.info("[SimplerAuth] Outdated database! The error above is normal. Converting to the new format, this may take a while.");
             JsonArray users = new JsonArray();
 
             // Reload database in the old format
             try {
-                BufferedReader bufferedReader = Files.newReader(dbfile, StandardCharsets.UTF_8);
-                users = gson.fromJson(bufferedReader, JsonArray.class);
+                BufferedReader bufferedReader = Files.newReader(DBFILE, StandardCharsets.UTF_8);
+                users = GSON.fromJson(bufferedReader, JsonArray.class);
             } catch (Exception e) {
-                e.printStackTrace();
+                AuthMod.LOGGER.error(e);
             }
 
             for (int i = 0; i < users.size(); i++) {
@@ -51,27 +51,27 @@ public class DbManager {
             }
 
             JsonObject newdb = new JsonObject();
-            newdb.addProperty("version", 1);
+            newdb.addProperty("version", VERSION);
             newdb.add("users", users);
             db = newdb;
-            LogManager.getLogger().info("[SimplerAuth] Finished converting the database.");
+            AuthMod.LOGGER.info("[SimplerAuth] Finished converting the database.");
             saveDatabase();
         }
     }
 
     private static void saveDatabase() {
         try {
-            BufferedWriter bufferedWriter = Files.newWriter(dbfile, StandardCharsets.UTF_8);
-            String json = gson.toJson(db);
+            BufferedWriter bufferedWriter = Files.newWriter(DBFILE, StandardCharsets.UTF_8);
+            String json = GSON.toJson(db);
             bufferedWriter.write(json);
             bufferedWriter.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            AuthMod.LOGGER.error(e);
         }
     }
 
     private static JsonObject getPlayer(String username) {
-        if (!dbfile.exists()) return null;
+        if (!DBFILE.exists()) return null;
         JsonArray users = db.get("users").getAsJsonArray();
         if (users.size() == 0) return null;
         for (int i = 0; i < users.size(); i++) {

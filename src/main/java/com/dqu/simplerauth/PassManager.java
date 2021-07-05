@@ -16,7 +16,7 @@ public class PassManager {
             byte[] hash = keyFactory.generateSecret(spec).getEncoded();
             return toHex(salt) + ":" + toHex(hash);
         } catch (Exception e) {
-            e.printStackTrace();
+            AuthMod.LOGGER.error(e);
         }
         return null;
     }
@@ -28,7 +28,7 @@ public class PassManager {
             byte[] hash = keyFactory.generateSecret(spec).getEncoded();
             return toHex(salt) + ":" + toHex(hash);
         } catch (Exception e) {
-            e.printStackTrace();
+            AuthMod.LOGGER.error(e);
         }
         return null;
     }
@@ -46,7 +46,7 @@ public class PassManager {
             secureRandom.nextBytes(salt);
             return salt;
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            AuthMod.LOGGER.error(e);
         }
         return null;
     }
