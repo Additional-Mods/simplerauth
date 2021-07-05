@@ -5,7 +5,7 @@ import net.minecraft.text.LiteralText;
 import java.util.HashMap;
 
 public class LangManager {
-    private static HashMap<String, String> lang = new HashMap<String, String>();
+    private static final HashMap<String, String> lang = new HashMap<String, String>();
 
     public static LiteralText getLiteralText(String key) {
         return new LiteralText(get(key));
