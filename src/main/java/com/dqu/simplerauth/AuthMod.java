@@ -1,6 +1,7 @@
 package com.dqu.simplerauth;
 
 import com.dqu.simplerauth.commands.*;
+import com.dqu.simplerauth.managers.ConfigManager;
 import com.dqu.simplerauth.managers.DbManager;
 import com.dqu.simplerauth.managers.LangManager;
 import com.dqu.simplerauth.managers.PlayerManager;
@@ -15,6 +16,7 @@ public class AuthMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ConfigManager.loadConfig(); // Loads config file
         DbManager.loadDatabase(); // Loads password database
         LangManager.loadTranslations("en"); // Loads translations
         CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
