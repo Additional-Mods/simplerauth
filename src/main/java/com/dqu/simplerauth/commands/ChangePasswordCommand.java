@@ -1,7 +1,7 @@
 package com.dqu.simplerauth.commands;
 
-import com.dqu.simplerauth.DbManager;
-import com.dqu.simplerauth.LangManager;
+import com.dqu.simplerauth.managers.DbManager;
+import com.dqu.simplerauth.managers.LangManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.server.command.ServerCommandSource;

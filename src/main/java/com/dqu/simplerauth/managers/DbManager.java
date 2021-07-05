@@ -1,5 +1,6 @@
-package com.dqu.simplerauth;
+package com.dqu.simplerauth.managers;
 
+import com.dqu.simplerauth.AuthMod;
 import com.google.common.io.Files;
 import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;

@@ -1,6 +1,9 @@
 package com.dqu.simplerauth;
 
 import com.dqu.simplerauth.commands.*;
+import com.dqu.simplerauth.managers.DbManager;
+import com.dqu.simplerauth.managers.LangManager;
+import com.dqu.simplerauth.managers.PlayerManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import org.apache.logging.log4j.LogManager;

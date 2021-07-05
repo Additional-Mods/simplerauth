@@ -1,4 +1,4 @@
-package com.dqu.simplerauth;
+package com.dqu.simplerauth.managers;
 
 import net.minecraft.text.LiteralText;
 

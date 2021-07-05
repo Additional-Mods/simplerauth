@@ -1,4 +1,6 @@
-package com.dqu.simplerauth;
+package com.dqu.simplerauth.managers;
+
+import com.dqu.simplerauth.AuthMod;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

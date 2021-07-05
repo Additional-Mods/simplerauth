@@ -1,6 +1,6 @@
 package com.dqu.simplerauth.listeners;
 
-import com.dqu.simplerauth.LangManager;
+import com.dqu.simplerauth.managers.LangManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class OnPlayerConnect {
