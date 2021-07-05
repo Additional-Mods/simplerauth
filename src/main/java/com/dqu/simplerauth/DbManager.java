@@ -30,33 +30,7 @@ public class DbManager {
             AuthMod.LOGGER.error(e);
         }
 
-        if (db.get("version") == null) {
-            // Convert the old database to a new format.
-            AuthMod.LOGGER.info("[SimplerAuth] Outdated database! The error above is normal. Converting to the new format, this may take a while.");
-            JsonArray users = new JsonArray();
-
-            // Reload database in the old format
-            try {
-                BufferedReader bufferedReader = Files.newReader(DBFILE, StandardCharsets.UTF_8);
-                users = GSON.fromJson(bufferedReader, JsonArray.class);
-            } catch (Exception e) {
-                AuthMod.LOGGER.error(e);
-            }
-
-            for (int i = 0; i < users.size(); i++) {
-                JsonObject user = users.get(i).getAsJsonObject();
-                String password = user.get("password").getAsString();
-                String hashed = PassManager.encrypt(password);
-                user.addProperty("password", hashed);
-            }
-
-            JsonObject newdb = new JsonObject();
-            newdb.addProperty("version", VERSION);
-            newdb.add("users", users);
-            db = newdb;
-            AuthMod.LOGGER.info("[SimplerAuth] Finished converting the database.");
-            saveDatabase();
-        }
+        if (db.get("version") == null) convertDatabase(-1);
     }
 
     private static void saveDatabase() {
@@ -111,5 +85,35 @@ public class DbManager {
         String hashed = PassManager.encrypt(password);
         user.addProperty("password", hashed);
         saveDatabase();
+    }
+
+    private static void convertDatabase(int version) {
+        if (version == -1) {
+            // Convert the old database to a new format.
+            AuthMod.LOGGER.info("[SimplerAuth] Outdated database! The error above is normal. Converting to the new format, this may take a while.");
+            JsonArray users = new JsonArray();
+
+            // Reload database in the old format
+            try {
+                BufferedReader bufferedReader = Files.newReader(DBFILE, StandardCharsets.UTF_8);
+                users = GSON.fromJson(bufferedReader, JsonArray.class);
+            } catch (Exception e) {
+                AuthMod.LOGGER.error(e);
+            }
+
+            for (int i = 0; i < users.size(); i++) {
+                JsonObject user = users.get(i).getAsJsonObject();
+                String password = user.get("password").getAsString();
+                String hashed = PassManager.encrypt(password);
+                user.addProperty("password", hashed);
+            }
+
+            JsonObject newdb = new JsonObject();
+            newdb.addProperty("version", VERSION);
+            newdb.add("users", users);
+            db = newdb;
+            AuthMod.LOGGER.info("[SimplerAuth] Finished converting the database.");
+            saveDatabase();
+        }
     }
 }
