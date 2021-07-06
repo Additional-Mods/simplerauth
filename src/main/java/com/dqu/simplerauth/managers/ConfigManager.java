@@ -23,11 +23,11 @@ public class ConfigManager {
         if (!DBFILE.exists()) {
             db.addProperty("version", VERSION);
 
-            db.addProperty("enableSessions", true);
-            db.addProperty("sessionsValidHours", "6");
-            db.addProperty("skipOnlineAuth", true);
-            db.addProperty("passwordType", "local");
-            db.addProperty("globalPassword", "123456");
+            db.addProperty("sessions-enabled", true);
+            db.addProperty("sessions-valid-hours", "6");
+            db.addProperty("skip-online-auth", true);
+            db.addProperty("password-type", "local");
+            db.addProperty("global-password", "123456");
 
             saveDatabase();
         }
@@ -59,12 +59,30 @@ public class ConfigManager {
         return db.get(key).getAsBoolean();
     }
 
+    public static void setBoolean(String key, Boolean value) {
+        if (!DBFILE.exists()) {
+            AuthMod.LOGGER.warn("setString was called but config file doesn't exist!");
+            return;
+        }
+        db.addProperty(key, value);
+        saveDatabase();
+    }
+
     public static int getInt(String key) {
         if (!DBFILE.exists()) {
             AuthMod.LOGGER.warn("getInt was called but config file doesn't exist!");
             return 0;
         }
         return db.get(key).getAsInt();
+    }
+
+    public static void setInt(String key, Integer value) {
+        if (!DBFILE.exists()) {
+            AuthMod.LOGGER.warn("setString was called but config file doesn't exist!");
+            return;
+        }
+        db.addProperty(key, value);
+        saveDatabase();
     }
 
     public static String getString(String key) {
@@ -74,4 +92,20 @@ public class ConfigManager {
         }
         return db.get(key).getAsString();
     }
+
+    public static void setString(String key, String value) {
+        if (!DBFILE.exists()) {
+            AuthMod.LOGGER.warn("setString was called but config file doesn't exist!");
+            return;
+        }
+        db.addProperty(key, value);
+        saveDatabase();
+    }
+
+    public static String getAuthType() {
+        String authtype = getString("password-type");
+        if (authtype.equalsIgnoreCase("local")) return "local";
+        return authtype.equalsIgnoreCase("global") ? "global" : "none";
+    }
+
 }

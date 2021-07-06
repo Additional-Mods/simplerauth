@@ -1,6 +1,7 @@
 package com.dqu.simplerauth.commands;
 
 import com.dqu.simplerauth.AuthMod;
+import com.dqu.simplerauth.managers.ConfigManager;
 import com.dqu.simplerauth.managers.DbManager;
 import com.dqu.simplerauth.managers.LangManager;
 import com.dqu.simplerauth.PlayerObject;
@@ -22,6 +23,14 @@ public class RegisterCommand {
                         String passwordRepeat = StringArgumentType.getString(ctx, "repeatPassword");
                         ServerPlayerEntity player = ctx.getSource().getPlayer();
                         String username = player.getEntityName();
+                        String authtype = ConfigManager.getAuthType();
+
+                        if (authtype.equals("global")) {
+                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.register.globaltype"), false);
+                            return 1;
+                        } else if (authtype.equals("none")) {
+                            player.networkHandler.disconnect(LangManager.getLiteralText("config.incorrect"));
+                        }
 
                         if (DbManager.isPlayerRegistered(username)) {
                             ctx.getSource().sendFeedback(LangManager.getLiteralText("command.register.alreadyregistered"), false);
