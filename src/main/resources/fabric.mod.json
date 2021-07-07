@@ -10,8 +10,8 @@
     "Londiuh"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/Dqu1J/login/"
+    "homepage": "https://github.com/Dqu1J/SimplerAuth/",
+    "sources": "https://github.com/Dqu1J/SimplerAuth/"
   },
 
   "license": "MIT",
@@ -30,8 +30,8 @@
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": "1.17.x",
-    "java": ">=16"
+    "minecraft": "1.16.x",
+    "java": ">=8"
   },
   "suggests": {
   }
