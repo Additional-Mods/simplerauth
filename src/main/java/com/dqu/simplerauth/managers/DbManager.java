@@ -85,15 +85,15 @@ public class DbManager {
     public static boolean sessionVerify(String username, String ip) {
         JsonObject user = getPlayer(username);
         if (user == null) return false;
-        String sip = user.get("session-ip").getAsString();
-        String stimestamp = user.get("session-timestamp").getAsString();
+        JsonElement sip = user.get("session-ip");
+        JsonElement stimestamp = user.get("session-timestamp");
 
         if (sip == null || stimestamp == null) return false; // for compatibility with 1.1.x
-        if (!sip.equals(ip)) return false;
+        if (!sip.getAsString().equals(ip)) return false;
 
         LocalDateTime parsed;
         try {
-            parsed = LocalDateTime.parse(stimestamp);
+            parsed = LocalDateTime.parse(stimestamp.getAsString());
         } catch (Exception e) {
             // Date is incorrect
             return false;

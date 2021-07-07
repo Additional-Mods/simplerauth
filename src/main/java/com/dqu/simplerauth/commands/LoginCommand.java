@@ -40,6 +40,8 @@ public class LoginCommand {
                         if (DbManager.isPasswordCorrect(username, password)) {
                             playerObject.authenticate();
                             if (!player.isCreative()) player.setInvulnerable(false);
+                            if (ConfigManager.getBoolean("sessions-enabled"))
+                                DbManager.sessionCreate(player.getEntityName(), player.getIp());
                             ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.authenticated"), false);
                         } else {
                             player.networkHandler.disconnect(LangManager.getLiteralText("command.general.notmatch"));
