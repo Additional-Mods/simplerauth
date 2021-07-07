@@ -3,7 +3,7 @@ package com.dqu.simplerauth;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class PlayerObject {
-    private ServerPlayerEntity player;
+    private final ServerPlayerEntity player;
     private boolean authenticated;
 
     public PlayerObject(ServerPlayerEntity player) {

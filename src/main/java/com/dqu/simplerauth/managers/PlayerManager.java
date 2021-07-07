@@ -1,5 +1,6 @@
-package com.dqu.simplerauth;
+package com.dqu.simplerauth.managers;
 
+import com.dqu.simplerauth.PlayerObject;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.HashMap;

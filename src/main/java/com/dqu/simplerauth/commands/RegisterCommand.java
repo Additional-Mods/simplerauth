@@ -1,8 +1,9 @@
 package com.dqu.simplerauth.commands;
 
 import com.dqu.simplerauth.AuthMod;
-import com.dqu.simplerauth.DbManager;
-import com.dqu.simplerauth.LangManager;
+import com.dqu.simplerauth.managers.ConfigManager;
+import com.dqu.simplerauth.managers.DbManager;
+import com.dqu.simplerauth.managers.LangManager;
 import com.dqu.simplerauth.PlayerObject;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -19,9 +20,17 @@ public class RegisterCommand {
                 .then(argument("repeatPassword", StringArgumentType.word())
                     .executes(ctx -> {
                         String password = StringArgumentType.getString(ctx, "password");
-                        String passwordRepeat = StringArgumentType.getString(ctx, "password");
+                        String passwordRepeat = StringArgumentType.getString(ctx, "repeatPassword");
                         ServerPlayerEntity player = ctx.getSource().getPlayer();
                         String username = player.getEntityName();
+                        String authtype = ConfigManager.getAuthType();
+
+                        if (authtype.equals("global")) {
+                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.register.globaltype"), false);
+                            return 1;
+                        } else if (authtype.equals("none")) {
+                            player.networkHandler.disconnect(LangManager.getLiteralText("config.incorrect"));
+                        }
 
                         if (DbManager.isPlayerRegistered(username)) {
                             ctx.getSource().sendFeedback(LangManager.getLiteralText("command.register.alreadyregistered"), false);
@@ -29,7 +38,7 @@ public class RegisterCommand {
                         }
 
                         if (!password.equals(passwordRepeat)) {
-                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.register.passwordrepeatwrong"), false);
+                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);
                             return 1;
                         }
 
@@ -37,7 +46,7 @@ public class RegisterCommand {
                         PlayerObject playerObject = AuthMod.playerManager.get(player);
                         playerObject.authenticate();
                         if (!player.isCreative()) player.setInvulnerable(false);
-                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.register.success"), false);
+                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.authenticated"), false);
                         return 1;
                     })
                 )

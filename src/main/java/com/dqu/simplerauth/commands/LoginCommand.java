@@ -1,8 +1,9 @@
 package com.dqu.simplerauth.commands;
 
 import com.dqu.simplerauth.AuthMod;
-import com.dqu.simplerauth.DbManager;
-import com.dqu.simplerauth.LangManager;
+import com.dqu.simplerauth.managers.ConfigManager;
+import com.dqu.simplerauth.managers.DbManager;
+import com.dqu.simplerauth.managers.LangManager;
 import com.dqu.simplerauth.PlayerObject;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -21,23 +22,45 @@ public class LoginCommand {
                     String username = ctx.getSource().getPlayer().getEntityName();
                     ServerPlayerEntity player = ctx.getSource().getPlayer();
                     PlayerObject playerObject = AuthMod.playerManager.get(player);
+                    String passwordtype = ConfigManager.getAuthType();
 
                     if (playerObject.isAuthenticated()) {
                         ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.alreadylogged"), false);
                         return 1;
                     }
 
-                    if (!DbManager.isPlayerRegistered(username)) {
-                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.notregistered"), false);
-                        return 1;
-                    }
+                    if (passwordtype.equals("local")) {
+                        // Local Password Authentication
 
-                    if (DbManager.isPasswordCorrect(username, password)) {
-                        playerObject.authenticate();
-                        if (!player.isCreative()) player.setInvulnerable(false);
-                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.success"), false);
+                        if (!DbManager.isPlayerRegistered(username)) {
+                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.notregistered"), false);
+                            return 1;
+                        }
+
+                        if (DbManager.isPasswordCorrect(username, password)) {
+                            playerObject.authenticate();
+                            if (!player.isCreative()) player.setInvulnerable(false);
+                            if (ConfigManager.getBoolean("sessions-enabled"))
+                                DbManager.sessionCreate(player.getEntityName(), player.getIp());
+                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.authenticated"), false);
+                        } else {
+                            player.networkHandler.disconnect(LangManager.getLiteralText("command.general.notmatch"));
+                        }
+                    } else if (passwordtype.equals("global")) {
+                        // Global Password Authentication
+                        String globalPassword = ConfigManager.getString("global-password");
+
+                        if (password.equals(globalPassword)) {
+                            playerObject.authenticate();
+                            if (!player.isCreative()) player.setInvulnerable(false);
+                            if (ConfigManager.getBoolean("sessions-enabled"))
+                                DbManager.sessionCreate(player.getEntityName(), player.getIp());
+                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.authenticated"), false);
+                        } else {
+                            player.networkHandler.disconnect(LangManager.getLiteralText("command.general.notmatch"));
+                        }
                     } else {
-                        player.networkHandler.disconnect(LangManager.getLiteralText("command.login.wrongpassword"));
+                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.login.wrongpassword"), false);
                     }
 
                     return 1;
