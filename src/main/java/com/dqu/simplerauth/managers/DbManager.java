@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class DbManager {
     public static final int VERSION = 1;
@@ -78,6 +80,43 @@ public class DbManager {
         if (user == null) return false;
         String hashed = user.get("password").getAsString();
         return PassManager.verify(password, hashed);
+    }
+
+    public static boolean sessionVerify(String username, String ip) {
+        JsonObject user = getPlayer(username);
+        if (user == null) return false;
+        String sip = user.get("session-ip").getAsString();
+        String stimestamp = user.get("session-timestamp").getAsString();
+
+        if (sip == null || stimestamp == null) return false; // for compatibility with 1.1.x
+        if (!sip.equals(ip)) return false;
+
+        LocalDateTime parsed;
+        try {
+            parsed = LocalDateTime.parse(stimestamp);
+        } catch (Exception e) {
+            // Date is incorrect
+            return false;
+        }
+
+        long duration = Duration.between(parsed, LocalDateTime.now()).toHours();
+        return duration <= ConfigManager.getInt("sessions-valid-hours");
+    }
+
+    public static void sessionCreate(String username, String ip) {
+        JsonObject user = getPlayer(username);
+        if (user == null) return;
+        user.addProperty("session-ip", ip);
+        user.addProperty("session-timestamp", LocalDateTime.now().toString());
+        saveDatabase();
+    }
+
+    public static void sessionDestroy(String username) {
+        JsonObject user = getPlayer(username);
+        if (user == null) return;
+        user.addProperty("session-ip", "");
+        user.addProperty("session-timestamp", "");
+        saveDatabase();
     }
 
     public static void setPassword(String username, String password) {

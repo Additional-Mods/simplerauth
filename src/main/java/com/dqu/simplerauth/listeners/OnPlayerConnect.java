@@ -33,6 +33,19 @@ public class OnPlayerConnect {
             playerObject.authenticate();
             player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
             AuthMod.LOGGER.info(player.getEntityName() + " is using an online account, authenticated automatically.");
+            return;
+        }
+
+        boolean sessionenabled = ConfigManager.getBoolean("sessions-enabled");
+        if (sessionenabled) {
+            if (DbManager.sessionVerify(player.getEntityName(), player.getIp())) {
+                PlayerObject playerObject = AuthMod.playerManager.get(player);
+                playerObject.authenticate();
+                DbManager.sessionCreate(player.getEntityName(), player.getIp());
+                player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
+            } else {
+                DbManager.sessionDestroy(player.getEntityName());
+            }
         }
     }
 
@@ -64,6 +77,7 @@ public class OnPlayerConnect {
             } else return false;
         } catch (Exception e) {
             AuthMod.LOGGER.error(e);
+            return false;
         }
 
         JsonObject jsonObject = GSON.fromJson(content, JsonObject.class);
