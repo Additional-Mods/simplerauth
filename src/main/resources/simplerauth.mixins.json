@@ -4,10 +4,12 @@
   "package": "com.dqu.simplerauth.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "ServerConfigHandlerMixin",
+    "UserCacheMixin"
   ],
   "server": [
-    "ServerLoginNetworkHandlerMixin",
     "PlayerManagerMixin",
+    "ServerLoginNetworkHandlerMixin",
     "ServerPlayNetworkHandlerMixin"
   ],
   "injectors": {
