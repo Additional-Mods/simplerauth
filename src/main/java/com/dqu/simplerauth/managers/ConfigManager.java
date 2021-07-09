@@ -25,9 +25,10 @@ public class ConfigManager {
 
             db.addProperty("sessions-enabled", true);
             db.addProperty("sessions-valid-hours", "6");
-            db.addProperty("skip-online-auth", true);
             db.addProperty("password-type", "local");
             db.addProperty("global-password", "123456");
+            db.addProperty("forced-online-auth", false);
+            db.addProperty("optional-online-auth", true);
 
             saveDatabase();
         }

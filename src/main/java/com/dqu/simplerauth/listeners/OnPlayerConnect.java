@@ -27,8 +27,8 @@ public class OnPlayerConnect {
         player.stopRiding();
         player.sendMessage(LangManager.getLiteralText("player.connect.authenticate"), false);
 
-        boolean skiponline = ConfigManager.getBoolean("skip-online-auth");
-        if (skiponline && testPlayerOnline(player) && DbManager.isPlayerRegistered(player.getEntityName())) {
+        boolean onlineAuth = ConfigManager.getBoolean("forced-online-auth") || ConfigManager.getBoolean("optional-online-auth");
+        if (onlineAuth && testPlayerOnline(player) && DbManager.isPlayerRegistered(player.getEntityName())) {
             PlayerObject playerObject = AuthMod.playerManager.get(player);
             playerObject.authenticate();
             player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
