@@ -13,7 +13,7 @@ public class OnPlayerLogin {
             return false;
         }
 
-        if (forcedOnlineAuth) return AuthMod.doesMinecraftAccountExist(username);
+        if (forcedOnlineAuth) return !ConfigManager.forcePlayerOffline(username) && AuthMod.doesMinecraftAccountExist(username);
         else return DbManager.isPlayerRegistered(username) && DbManager.getUseOnlineAuth(username);
     }
 }

@@ -4,6 +4,7 @@ import com.dqu.simplerauth.AuthMod;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -11,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 public class ConfigManager {
     public static final int VERSION = 1;
@@ -109,4 +111,15 @@ public class ConfigManager {
         return authtype.equalsIgnoreCase("global") ? "global" : "none";
     }
 
+
+    public static boolean forcePlayerOffline(String username) {
+        if (!db.has("forced-offline-users")) return false;
+        JsonArray forcedOfflineUsers = db.getAsJsonArray("forced-offline-users");
+        for (int i = 0; i < forcedOfflineUsers.size(); ++i) {
+            String user = forcedOfflineUsers.get(i).getAsString().toLowerCase(Locale.ROOT);
+            if (user.matches(username.toLowerCase(Locale.ROOT))) return true;
+        }
+
+        return false;
+    }
 }
