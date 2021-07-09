@@ -1,5 +1,6 @@
 package com.dqu.simplerauth.commands;
 
+import com.dqu.simplerauth.listeners.OnOnlineAuthChanged;
 import com.dqu.simplerauth.managers.ConfigManager;
 import com.dqu.simplerauth.managers.DbManager;
 import com.dqu.simplerauth.managers.LangManager;
@@ -70,6 +71,7 @@ public class OnlineAuthCommand {
         if (password != null) {
             if (DbManager.isPasswordCorrect(username, password)) {
                 DbManager.setUseOnlineAuth(username, true);
+                OnOnlineAuthChanged.onEnabled(player);
                 source.sendFeedback(LangManager.getLiteralText("command.onlineauth.enabled"), false);
             } else {
                 source.sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);
@@ -98,6 +100,7 @@ public class OnlineAuthCommand {
         if (password != null) {
             if (DbManager.isPasswordCorrect(username, password)) {
                 DbManager.setUseOnlineAuth(username, false);
+                OnOnlineAuthChanged.onDisabled(player);
                 source.sendFeedback(LangManager.getLiteralText("command.onlineauth.disabled"), false);
             } else {
                 source.sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);

@@ -2,6 +2,7 @@ package com.dqu.simplerauth.listeners;
 
 import com.dqu.simplerauth.AuthMod;
 import com.dqu.simplerauth.PlayerObject;
+import com.dqu.simplerauth.managers.CacheManager;
 import com.dqu.simplerauth.managers.ConfigManager;
 import com.dqu.simplerauth.managers.DbManager;
 import com.dqu.simplerauth.managers.LangManager;
@@ -57,31 +58,40 @@ public class OnPlayerConnect {
         Matcher matcher = pattern.matcher(uuid);
         if (!matcher.matches()) return false;
 
-        String content = "";
-        try {
-            HttpsURLConnection connection = (HttpsURLConnection) new URL("https://api.mojang.com/users/profiles/minecraft/" + player.getEntityName()).openConnection();
-            connection.setRequestMethod("GET");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
+        String realUuid;
 
-            int response = connection.getResponseCode();
-            if (response == HttpURLConnection.HTTP_OK) {
-                InputStream stream = connection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
-                StringBuilder stringBuilder = new StringBuilder();
-                String out;
-                while ((out = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(out);
-                }
-                content = stringBuilder.toString();
-            } else return false;
-        } catch (Exception e) {
-            AuthMod.LOGGER.error(e);
-            return false;
+        JsonObject cachedAccount = CacheManager.getMinecraftAccount(player.getEntityName());
+        if (cachedAccount == null) {
+            String content = "";
+            try {
+                HttpsURLConnection connection = (HttpsURLConnection) new URL("https://api.mojang.com/users/profiles/minecraft/" + player.getEntityName()).openConnection();
+                connection.setRequestMethod("GET");
+                connection.setConnectTimeout(5000);
+                connection.setReadTimeout(5000);
+
+                int response = connection.getResponseCode();
+                if (response == HttpURLConnection.HTTP_OK) {
+                    InputStream stream = connection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String out;
+                    while ((out = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(out);
+                    }
+                    content = stringBuilder.toString();
+                } else return false;
+            } catch (Exception e) {
+                AuthMod.LOGGER.error(e);
+                return false;
+            }
+
+            JsonObject jsonObject = GSON.fromJson(content, JsonObject.class);
+            realUuid = jsonObject.get("id").getAsString().toLowerCase();
+
+            CacheManager.addMinecraftAccount(player.getEntityName(), realUuid);
+        } else {
+            realUuid = cachedAccount.get("online-uuid").getAsString();
         }
-
-        JsonObject jsonObject = GSON.fromJson(content, JsonObject.class);
-        String realUuid = jsonObject.get("id").getAsString().toLowerCase();
         return uuid.equals(realUuid);
     }
 }
