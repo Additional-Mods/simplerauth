@@ -6,6 +6,7 @@
 This mod adds a layer of protection for players accounts.  
 
 <br>
+
 **Commands**
 - /login <password> : Login into your account
 - /register <password> <repeatPassword> : Register a new account
