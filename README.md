@@ -1,11 +1,10 @@
 ## Simpler Auth
-#### A mod for protecting your players accounts by registration.
+#### A Minecraft Fabric mod that adds server-side authentication.
 
 <br>
 
 This mod adds a layer of protection for players accounts.  
-When player first joins the server, it will need to register.  
-After, it will need to login using the password it entered during registration.  
+
 <br>
 **Commands**
 - /login <password> : Login into your account
