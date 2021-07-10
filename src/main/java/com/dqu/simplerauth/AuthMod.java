@@ -64,11 +64,7 @@ public class AuthMod implements ModInitializer {
         }
 
         JsonObject jsonObject = GSON.fromJson(content, JsonObject.class);
-        if (jsonObject.has("id")) {
-            CacheManager.addMinecraftAccount(username, jsonObject.get("id").getAsString());
-            return true;
-        } else {
-            return false;
-        }
+        CacheManager.addMinecraftAccount(username, jsonObject.get("id").getAsString());
+        return true;
     }
 }

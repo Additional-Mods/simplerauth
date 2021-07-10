@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 public class ConfigManager {
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String PATH = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-config.json").toString();
     private static final File DBFILE = new File(PATH);
@@ -31,6 +31,7 @@ public class ConfigManager {
             db.addProperty("global-password", "123456");
             db.addProperty("forced-online-auth", false);
             db.addProperty("optional-online-auth", true);
+            db.add("forced-offline-users", new JsonArray());
 
             saveDatabase();
         }
@@ -41,6 +42,8 @@ public class ConfigManager {
         } catch (Exception e) {
             AuthMod.LOGGER.error(e);
         }
+
+        if (db.get("version").getAsInt() != VERSION) convertDatabase(db.get("version").getAsInt());
     }
 
     private static void saveDatabase() {
@@ -113,7 +116,7 @@ public class ConfigManager {
 
 
     public static boolean forcePlayerOffline(String username) {
-        if (!db.has("forced-offline-users")) return false;
+        if (db.get("forced-offline-users").getAsJsonArray().size() == 0) return false;
         JsonArray forcedOfflineUsers = db.getAsJsonArray("forced-offline-users");
         for (int i = 0; i < forcedOfflineUsers.size(); ++i) {
             String user = forcedOfflineUsers.get(i).getAsString().toLowerCase(Locale.ROOT);
@@ -121,5 +124,19 @@ public class ConfigManager {
         }
 
         return false;
+    }
+
+    private static void convertDatabase(int version) {
+        if (version == 1) {
+            db.addProperty("version", VERSION);
+            boolean skipOnlineAuth = db.get("skip-online-auth").getAsBoolean();
+            db.remove("skip-online-auth");
+            db.addProperty("forced-online-auth", false);
+            db.addProperty("optional-online-auth", skipOnlineAuth);
+            db.add("forced-offline-users", new JsonArray());
+
+            AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");
+            saveDatabase();
+        }
     }
 }

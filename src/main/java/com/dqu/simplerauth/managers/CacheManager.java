@@ -57,7 +57,7 @@ public class CacheManager {
     }
 
     public static JsonArray getMinecraftAccounts() {
-        return db.getAsJsonArray("minecraft-account-cache");
+        return db.get("minecraft-account-cache").getAsJsonArray();
     }
 
     @Nullable
@@ -75,13 +75,9 @@ public class CacheManager {
     }
 
     public static void addMinecraftAccount(String username, String onlineUuid) {
-        String offlineUuid = PlayerEntity.getOfflinePlayerUuid(username).toString();
-        onlineUuid = formatUuid(onlineUuid);
-
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("username", username);
         jsonObject.addProperty("online-uuid", onlineUuid);
-        jsonObject.addProperty("offline-uuid", offlineUuid);
         jsonObject.addProperty("timestamp", LocalDateTime.now().toString());
 
         getMinecraftAccounts().add(jsonObject);
@@ -110,14 +106,5 @@ public class CacheManager {
         }
 
         saveCache();
-    }
-
-    private static String formatUuid(String uuid) {
-        // Check if UUID doesn't have dashes
-        Pattern pattern = Pattern.compile("^[a-z0-9]{32}$");
-        Matcher matcher = pattern.matcher(uuid);
-        if (!matcher.matches()) return uuid;
-
-        return String.format("%s-%s-%s-%s-%s", uuid.substring(0, 8), uuid.substring(8, 12), uuid.substring(12, 16), uuid.substring(16, 20), uuid.substring(20));
     }
 }
