@@ -28,10 +28,13 @@ public class OnPlayerConnect {
         player.stopRiding();
         player.sendMessage(LangManager.getLiteralText("player.connect.authenticate"), false);
 
-        boolean onlineAuth = ConfigManager.getBoolean("forced-online-auth") || ConfigManager.getBoolean("optional-online-auth");
-        if (onlineAuth && testPlayerOnline(player) && DbManager.isPlayerRegistered(player.getEntityName())) {
+        boolean forcedOnlineAuth = ConfigManager.getBoolean("forced-online-auth");
+        boolean optionalOnlineAuth = ConfigManager.getBoolean("optional-online-auth");
+        // Forced online authentication does not require registration
+        if ((forcedOnlineAuth || (optionalOnlineAuth && DbManager.isPlayerRegistered(player.getEntityName()))) && testPlayerOnline(player)) {
             PlayerObject playerObject = AuthMod.playerManager.get(player);
             playerObject.authenticate();
+            if (!player.isCreative()) player.setInvulnerable(false);
             player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
             AuthMod.LOGGER.info(player.getEntityName() + " is using an online account, authenticated automatically.");
             return;
@@ -42,6 +45,7 @@ public class OnPlayerConnect {
             if (DbManager.sessionVerify(player.getEntityName(), player.getIp())) {
                 PlayerObject playerObject = AuthMod.playerManager.get(player);
                 playerObject.authenticate();
+                if (!player.isCreative()) player.setInvulnerable(false);
                 DbManager.sessionCreate(player.getEntityName(), player.getIp());
                 player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
             } else {
