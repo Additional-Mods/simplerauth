@@ -1,5 +1,6 @@
 package com.dqu.simplerauth.commands;
 
+import com.dqu.simplerauth.AuthMod;
 import com.dqu.simplerauth.listeners.OnOnlineAuthChanged;
 import com.dqu.simplerauth.managers.ConfigManager;
 import com.dqu.simplerauth.managers.DbManager;
@@ -65,6 +66,9 @@ public class OnlineAuthCommand {
             return;
         } else if (DbManager.getUseOnlineAuth(username)) {
             source.sendFeedback(LangManager.getLiteralText("command.onlineauth.alreadyenabled"), false);
+            return;
+        } else if (!AuthMod.doesMinecraftAccountExist(username)) {
+            source.sendFeedback(LangManager.getLiteralText("command.onlineauth.cannotenable"), false);
             return;
         }
 

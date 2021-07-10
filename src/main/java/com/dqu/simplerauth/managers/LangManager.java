@@ -34,6 +34,7 @@ public class LangManager {
             lang.put("command.onlineauth.notregistered", "§cYou are not registered! Use §f/register §cbefore enabling online auth.");
             lang.put("command.onlineauth.featuredisabled", "§cOptional online auth is not enabled in this server!");
             lang.put("command.onlineauth.warning", "§cYou will lose all your data linked to your UUID, like your inventory & ender chest, statistics, advancements, villager discounts, etc.");
+            lang.put("command.onlineauth.cannotenable", "§cAn official account with this username does not exist! You can't enable this feature");
             lang.put("command.onlineauth.confirmenable", "§6To confirm, use §f/onlineauth enable <password>§6. You can disable it with §f/onlineauth disable§6.");
             lang.put("command.onlineauth.alreadyenabled", "§cAlready enabled!.");
             lang.put("command.onlineauth.enabled", "§aOnline auth has been enabled for your account. Reconnect to the server to apply the changes.");
@@ -56,6 +57,7 @@ public class LangManager {
             lang.put("command.onlineauth.notregistered", "§cYou are not registered! Use §f/register §cbefore enabling online auth.");
             lang.put("command.onlineauth.featuredisabled", "§cOptional online auth is not enabled in this server!");
             lang.put("command.onlineauth.warning", "§cYou will lose all your data linked to your UUID, like your inventory & ender chest, statistics, advancements, villager discounts, etc.");
+            lang.put("command.onlineauth.cannotenable", "§cAn official account with this username does not exist! You can't enable this feature");
             lang.put("command.onlineauth.confirmenable", "§6To confirm, use §f/onlineauth enable <password>§6. You can disable it with §f/onlineauth disable§6.");
             lang.put("command.onlineauth.alreadyenabled", "§cAlready enabled!.");
             lang.put("command.onlineauth.enabled", "§aOnline auth has been enabled for your account. Reconnect to the server to apply the changes.");
