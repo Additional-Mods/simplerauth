@@ -4,7 +4,6 @@ import com.dqu.simplerauth.AuthMod;
 import com.google.common.collect.Sets;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.api.FabricLoader;
@@ -20,7 +19,7 @@ import java.util.Collection;
 
 public class CacheManager {
     private static final int VERSION = 1;
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson GSON = new Gson();
     private static final String PATH = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-cache.json").toString();
     private static final File DBFILE = new File(PATH);
     private static JsonObject db = new JsonObject();
