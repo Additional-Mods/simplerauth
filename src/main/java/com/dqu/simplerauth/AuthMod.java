@@ -2,7 +2,6 @@ package com.dqu.simplerauth;
 
 import com.dqu.simplerauth.commands.*;
 import com.dqu.simplerauth.managers.*;
-import com.google.common.cache.Cache;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.fabricmc.api.ModInitializer;

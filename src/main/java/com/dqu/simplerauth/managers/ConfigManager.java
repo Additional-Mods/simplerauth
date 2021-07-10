@@ -117,7 +117,7 @@ public class ConfigManager {
 
     public static boolean forcePlayerOffline(String username) {
         if (db.get("forced-offline-users").getAsJsonArray().size() == 0) return false;
-        JsonArray forcedOfflineUsers = db.getAsJsonArray("forced-offline-users");
+        JsonArray forcedOfflineUsers = db.get("forced-offline-users").getAsJsonArray();
         for (int i = 0; i < forcedOfflineUsers.size(); ++i) {
             String user = forcedOfflineUsers.get(i).getAsString().toLowerCase(Locale.ROOT);
             if (user.matches(username.toLowerCase(Locale.ROOT))) return true;
