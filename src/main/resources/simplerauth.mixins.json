@@ -7,7 +7,10 @@
   ],
   "server": [
     "PlayerManagerMixin",
-    "ServerPlayNetworkHandlerMixin"
+    "ServerConfigHandlerMixin",
+    "ServerLoginNetworkHandlerMixin",
+    "ServerPlayNetworkHandlerMixin",
+    "UserCacheMixin"
   ],
   "injectors": {
     "defaultRequire": 1

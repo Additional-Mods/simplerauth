@@ -127,6 +127,19 @@ public class DbManager {
         saveDatabase();
     }
 
+    public static void setUseOnlineAuth(String username, boolean onlineAuth) {
+        JsonObject user = getPlayer(username);
+        if (user == null) return;
+        user.addProperty("online-auth", onlineAuth);
+        saveDatabase();
+    }
+
+    public static boolean getUseOnlineAuth(String username) {
+        JsonObject user = getPlayer(username);
+        if (user == null || !user.has("online-auth")) return false;
+        return user.get("online-auth").getAsBoolean();
+    }
+
     private static void convertDatabase(int version) {
         if (version == -1) {
             // Convert the old database to a new format.
