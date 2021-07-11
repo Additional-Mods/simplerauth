@@ -9,7 +9,7 @@ public class OnPlayerLogin {
     public static boolean canUseOnlineAuth(MinecraftServer server, String username) {
         boolean forcedOnlineAuth = ConfigManager.getBoolean("forced-online-auth");
         boolean optionalOnlineAuth = ConfigManager.getBoolean("optional-online-auth");
-        if (!server.isOnlineMode() || (!forcedOnlineAuth && !optionalOnlineAuth)) {
+        if (!forcedOnlineAuth && !optionalOnlineAuth) {
             return false;
         }
 

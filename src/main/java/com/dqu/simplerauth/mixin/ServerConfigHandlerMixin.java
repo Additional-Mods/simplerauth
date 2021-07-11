@@ -27,7 +27,7 @@ public class ServerConfigHandlerMixin {
     private static void lookupProfile(MinecraftServer server, Collection<String> bannedPlayers, ProfileLookupCallback callback, CallbackInfo ci) {
         boolean forcedOnlineAuth = ConfigManager.getBoolean("forced-online-auth");
         boolean optionalOnlineAuth = ConfigManager.getBoolean("optional-online-auth");
-        if (!server.isOnlineMode() || (!forcedOnlineAuth && !optionalOnlineAuth)) {
+        if (!forcedOnlineAuth && !optionalOnlineAuth) {
             return;
         }
 
@@ -52,7 +52,7 @@ public class ServerConfigHandlerMixin {
     private static boolean useOnlineModeForPlayer(MinecraftServer server, MinecraftServer server1, String name) {
         boolean forcedOnlineAuth = ConfigManager.getBoolean("forced-online-auth");
         boolean optionalOnlineAuth = ConfigManager.getBoolean("optional-online-auth");
-        if (!server.isOnlineMode() || (!forcedOnlineAuth && !optionalOnlineAuth)) {
+        if (!forcedOnlineAuth && !optionalOnlineAuth) {
             return false;
         }
 
