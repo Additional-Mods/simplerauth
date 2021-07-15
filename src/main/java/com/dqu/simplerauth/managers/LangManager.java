@@ -41,6 +41,7 @@ public class LangManager {
             lang.put("command.onlineauth.confirmdisable", "§6To confirm, use §f/onlineauth disable <password>§6. You can enable it again with §f/onlineauth§6.");
             lang.put("command.onlineauth.alreadydisabled", "§cAlready disabled!.");
             lang.put("command.onlineauth.disabled", "§aOnline auth has been disabled for your account. Reconnect to the server to apply the changes.");
+            lang.put("player.invalid_username", "§cInvalid username!");
             lang.put("player.connect.authenticate", "§6Пожалуйста, войдите! Используйте §f/login §6или §f/register§6.");
             lang.put("command.general.authenticated", "§aВы успешно вошли!");
             lang.put("command.general.notmatch", "§cПароли не совпадают!");
@@ -64,6 +65,7 @@ public class LangManager {
             lang.put("command.onlineauth.confirmdisable", "§6To confirm, use §f/onlineauth disable <password>§6. You can enable it again with §f/onlineauth§6.");
             lang.put("command.onlineauth.alreadydisabled", "§cAlready disabled!.");
             lang.put("command.onlineauth.disabled", "§aOnline auth has been disabled for your account. Reconnect to the server to apply the changes.");
+            lang.put("player.invalid_username", "§cInvalid username!");
             lang.put("player.connect.authenticate", "§6Please, authenticate! Use §f/login §6or §f/register§6.");
             lang.put("command.general.authenticated", "§aAuthenticated successfully!");
             lang.put("command.general.notmatch", "§cPasswords do not match!");

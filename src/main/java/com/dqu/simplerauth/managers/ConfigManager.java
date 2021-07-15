@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 public class ConfigManager {
-    public static final int VERSION = 2;
+    public static final int VERSION = 3;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String PATH = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-config.json").toString();
     private static final File DBFILE = new File(PATH);
@@ -27,6 +27,7 @@ public class ConfigManager {
 
             db.addProperty("sessions-enabled", true);
             db.addProperty("sessions-valid-hours", "6");
+            db.addProperty("username-regex", "^[A-z0-9_]{3,16}$");
             db.addProperty("password-type", "local");
             db.addProperty("global-password", "123456");
             db.addProperty("forced-online-auth", false);
@@ -134,6 +135,12 @@ public class ConfigManager {
             db.addProperty("forced-online-auth", false);
             db.addProperty("optional-online-auth", skipOnlineAuth);
             db.add("forced-offline-users", new JsonArray());
+
+            AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");
+            saveDatabase();
+        } else if (version == 2) {
+            db.addProperty("version", VERSION);
+            db.addProperty("username-regex", "^[A-z0-9_]{3,16}$");
 
             AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");
             saveDatabase();
