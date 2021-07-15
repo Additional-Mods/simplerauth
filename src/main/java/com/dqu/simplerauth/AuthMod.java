@@ -22,10 +22,10 @@ public class AuthMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ConfigManager.loadConfig(); // Loads config file
-        DbManager.loadDatabase(); // Loads password database
-        CacheManager.loadCache(); // Loads cache
-        LangManager.loadTranslations("en"); // Loads translations
+        ConfigManager.loadConfig();
+        DbManager.loadDatabase();
+        CacheManager.loadCache();
+        LangManager.loadTranslations(ConfigManager.getString("language"));
         CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
             LoginCommand.registerCommand(dispatcher);
             RegisterCommand.registerCommand(dispatcher);

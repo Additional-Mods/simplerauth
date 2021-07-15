@@ -25,6 +25,7 @@ public class ConfigManager {
         if (!DBFILE.exists()) {
             db.addProperty("version", VERSION);
 
+            db.addProperty("language", "en");
             db.addProperty("sessions-enabled", true);
             db.addProperty("sessions-valid-hours", "6");
             db.addProperty("username-regex", "^[A-z0-9_]{3,16}$");
@@ -140,6 +141,7 @@ public class ConfigManager {
             saveDatabase();
         } else if (version == 2) {
             db.addProperty("version", VERSION);
+            db.addProperty("language", "en");
             db.addProperty("username-regex", "^[A-z0-9_]{3,16}$");
 
             AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");
