@@ -25,7 +25,7 @@ Until player logins, it won't be able to:
 
 **Version Support**
 - ![](https://img.shields.io/badge/1.17.x-Supported-green)
-- ![](https://img.shields.io/badge/1.16.5-Not-Supported-important)
+- ![](https://img.shields.io/badge/1.16.5-Not%20Supported-important)
 - ![](https://img.shields.io/badge/1.16.4%3C-Not%20ported-red)
 
 [Modrinth](https://modrinth.com/mod/simpler-auth)
