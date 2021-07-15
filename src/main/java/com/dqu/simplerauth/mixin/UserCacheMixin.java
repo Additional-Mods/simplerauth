@@ -18,6 +18,7 @@ public abstract class UserCacheMixin {
     }
 
     // Without this, there might be issues with offline players
+    /** @noinspection UnresolvedMixinReference */
     @SuppressWarnings("target")
     @Redirect(method = {
             "method_14509(Lcom/mojang/authlib/GameProfileRepository;Ljava/lang/String;)Lcom/mojang/authlib/GameProfile;",

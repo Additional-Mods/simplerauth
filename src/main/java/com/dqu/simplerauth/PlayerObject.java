@@ -12,6 +12,8 @@ public class PlayerObject {
     }
 
     public void authenticate() {
+        if (!this.player.isCreative())
+            this.player.setInvulnerable(false);
         this.authenticated = true;
     }
 

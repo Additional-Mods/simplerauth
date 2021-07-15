@@ -45,7 +45,6 @@ public class RegisterCommand {
                         DbManager.addPlayerDatabase(username, password);
                         PlayerObject playerObject = AuthMod.playerManager.get(player);
                         playerObject.authenticate();
-                        if (!player.isCreative()) player.setInvulnerable(false);
                         ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.authenticated"), false);
                         return 1;
                     })
