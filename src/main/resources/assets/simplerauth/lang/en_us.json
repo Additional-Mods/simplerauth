@@ -1,9 +1,0 @@
-{
-  "command.login.notregistered": "§cYou are not registered! Use §f/register §cinstead.",
-  "command.login.success": "§aAuthenticated successfully!",
-  "command.login.wrongpassword": "§cWrong password!",
-  "command.register.alreadyregistered": "§cYou are already registered! Use §f/login §cinstead.",
-  "command.register.passwordrepeatwrong": "§cPasswords do not match!",
-  "command.register.success": "§aAuthenticated successfully!",
-  "player.connect.authenticate": "§6Please, authenticate! Use §f/login §6or §f/register§6."
-}
