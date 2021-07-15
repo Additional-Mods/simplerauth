@@ -1,5 +1,6 @@
 package com.dqu.simplerauth.mixin;
 
+import com.dqu.simplerauth.AuthMod;
 import com.dqu.simplerauth.listeners.OnPlayerConnect;
 import com.dqu.simplerauth.listeners.OnPlayerLeave;
 import com.dqu.simplerauth.managers.ConfigManager;
@@ -34,10 +35,15 @@ public class PlayerManagerMixin {
     @Inject(method = "checkCanJoin", at = @At("HEAD"), cancellable = true)
     public void canPlayerJoin(SocketAddress address, GameProfile profile, CallbackInfoReturnable<Text> cir) {
         String username = profile.getName();
-        Pattern regex = Pattern.compile(ConfigManager.getString("username-regex"));
-        Matcher matcher = regex.matcher(username);
-        if (!matcher.matches()) {
-            cir.setReturnValue(LangManager.getLiteralText("player.invalid_username"));
+        try {
+            Pattern regex = Pattern.compile(ConfigManager.getString("username-regex"));
+            Matcher matcher = regex.matcher(username);
+            if (!matcher.matches()) {
+                cir.setReturnValue(LangManager.getLiteralText("player.invalid_username"));
+            }
+        } catch (Exception e) {
+            AuthMod.LOGGER.error(LangManager.get("config.incorrect"));
+            AuthMod.LOGGER.warn("Skipping regex username verification as the config is incorrect.");
         }
     }
 }
