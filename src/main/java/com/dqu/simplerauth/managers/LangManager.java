@@ -48,6 +48,31 @@ public class LangManager {
                 lang.put("command.general.notmatch", "§cПароли не совпадают!");
                 lang.put("config.incorrect", "§cSimplerAuth config is set up wrongly!\nSee the wiki for more information on setting up the config.");
                 break;
+            case "es":
+                lang.put("command.login.notregistered", "§c¡No estás registrado! Usa §f/register §cen su lugar.");
+                lang.put("command.login.wrongpassword", "§c¡Contraseña incorrecta!");
+                lang.put("command.login.alreadylogged", "§c¡Ya estás autentificado!");
+                lang.put("command.register.alreadyregistered", "§c¡Ya estás registrado! Usa §f/login §cen su lugar.");
+                lang.put("command.register.globaltype", "§cLa contraseña global está puesta en este servidor, el registro no es posible! Usa §f/login");
+                lang.put("command.changepassword.notregistered", "§c¡No estás registrado!");
+                lang.put("command.changepassword.success", "§a¡Contraseña cambiada exitosamente!");
+                lang.put("command.onlineauth.globaltype", "§c¡La contraseña global está puesta en este servidor, la autentificación en línea no es posible! Use §f/login");
+                lang.put("command.onlineauth.notregistered", "§c¡No estás registrado! Usa §f/register §cantes de activar la autentificación en línea.");
+                lang.put("command.onlineauth.featuredisabled", "§c¡La autentificación en línea opcional no está activada en este servidor!");
+                lang.put("command.onlineauth.warning", "§cPerderás todos tus datos enlazados con tu UUID, como tu inventario y cofre de ender, estadisticas, logros, descuentos de aldeanos, etc.");
+                lang.put("command.onlineauth.cannotenable", "§c¡Una cuenta oficial con este nombre no existe! No puedes activar esta característica");
+                lang.put("command.onlineauth.confirmenable", "§6Para confirmar, usa §f/onlineauth enable <password>§6. Puedes desactivarla con §f/onlineauth disable§6.");
+                lang.put("command.onlineauth.alreadyenabled", "§c¡Ya está activada!.");
+                lang.put("command.onlineauth.enabled", "§aLa autentificación en línea ha sido activada para tu cuenta. Reconéctate al servidor para aplicar los cambios.");
+                lang.put("command.onlineauth.confirmdisable", "§6Para confirmar, usa §f/onlineauth disable <password>§6. Puedes volver a activarla con §f/onlineauth§6.");
+                lang.put("command.onlineauth.alreadydisabled", "§c!Ya está desactivada!.");
+                lang.put("command.onlineauth.disabled", "§aLa autentificación en línea ha sido desactivada para tu cuenta. Reconéctate al servidor para aplicar los cambios.");
+                lang.put("player.invalid_username", "§c¡Nombre de usuario inválido!");
+                lang.put("player.connect.authenticate", "§6Por favor, autentifícate! Usa §f/login §6o §f/register§6.");
+                lang.put("command.general.authenticated", "§a¡Autentificado exitosamente!");
+                lang.put("command.general.notmatch", "§c¡Las contraseñas no coinciden!");
+                lang.put("config.incorrect", "§cLa configuración de SimplerAuth está mal configurada!\nMira la wiki para más información sobre como configurar la configuración.");
+                break;
             default:
                 lang.put("command.login.notregistered", "§cYou are not registered! Use §f/register §cinstead.");
                 lang.put("command.login.wrongpassword", "§cWrong password!");
