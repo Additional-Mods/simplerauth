@@ -33,7 +33,7 @@ public class OnPlayerConnect {
         // Forced online authentication does not require registration
         if ((forcedOnlineAuth || (optionalOnlineAuth && DbManager.isPlayerRegistered(player.getEntityName()))) && testPlayerOnline(player)) {
             PlayerObject playerObject = AuthMod.playerManager.get(player);
-            playerObject.authenticate();
+            playerObject.authenticate(player);
             player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
             AuthMod.LOGGER.info(player.getEntityName() + " is using an online account, authenticated automatically.");
             return;
@@ -43,7 +43,7 @@ public class OnPlayerConnect {
         if (sessionenabled) {
             if (DbManager.sessionVerify(player.getEntityName(), player.getIp())) {
                 PlayerObject playerObject = AuthMod.playerManager.get(player);
-                playerObject.authenticate();
+                playerObject.authenticate(player);
                 DbManager.sessionCreate(player.getEntityName(), player.getIp());
                 player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
             } else {

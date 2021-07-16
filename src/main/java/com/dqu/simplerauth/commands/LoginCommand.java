@@ -38,7 +38,7 @@ public class LoginCommand {
                         }
 
                         if (DbManager.isPasswordCorrect(username, password)) {
-                            playerObject.authenticate();
+                            playerObject.authenticate(player);
                             if (ConfigManager.getBoolean("sessions-enabled"))
                                 DbManager.sessionCreate(player.getEntityName(), player.getIp());
                             ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.authenticated"), false);
@@ -50,7 +50,7 @@ public class LoginCommand {
                         String globalPassword = ConfigManager.getString("global-password");
 
                         if (password.equals(globalPassword)) {
-                            playerObject.authenticate();
+                            playerObject.authenticate(player);
                             if (ConfigManager.getBoolean("sessions-enabled"))
                                 DbManager.sessionCreate(player.getEntityName(), player.getIp());
                             ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.authenticated"), false);
