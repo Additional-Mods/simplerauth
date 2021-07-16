@@ -1,9 +1,4 @@
-## Simpler Auth
-#### A Minecraft Fabric mod that adds server-side authentication.
-
-<br>
-
-This mod adds a layer of protection for players accounts.  
+# SimplerAuth is a mod that adds server-side authentication.
 
 <br>
 
@@ -11,6 +6,7 @@ This mod adds a layer of protection for players accounts.
 - /login <password> : Login into your account
 - /register <password> <repeatPassword> : Register a new account
 - /changepassword <oldPassword> <newPassword> : Change your account password
+- /onlineauth : Allows to enable optional online authentication
 
 <br>
 
@@ -19,9 +15,17 @@ Until player logins, it won't be able to:
 - Destroy or place blocks
 - Throw items
 - Move or rotate
-- Modify their inventory
+- Modify inventory
 
-<br>  
+<br>
+
+**Features:**
+- Sessions
+- Optional and forced online authentication
+- Global and Local password types
+- Regex username verification
+- Multiple languages
+- ...and more!
 
 **Version Support**
 - ![](https://img.shields.io/badge/1.17.x-Supported-green)
