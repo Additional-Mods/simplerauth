@@ -29,6 +29,7 @@ public class LangManager {
                 lang.put("command.login.alreadylogged", "§cВы уже вошли!");
                 lang.put("command.register.alreadyregistered", "§cВы уже зарегестрированы! Используйте §f/login");
                 lang.put("command.register.globaltype", "§cНа сервере установлен глобальный пароль, регистрация невозможна! Используйте §f/login");
+                lang.put("command.register.passweak", "§cЭтот пароль не надежный! Пожалуйста, попробуйте более надёжный пароль.");
                 lang.put("command.changepassword.notregistered", "§cВы не зарегестрированы!");
                 lang.put("command.changepassword.success", "§aВы успешно изменили пароль!");
                 lang.put("command.onlineauth.globaltype", "§cНа этом сервере установлен глобальный пароль, онлайн авторизация невозможна! Используйте §f/login");
@@ -55,6 +56,7 @@ public class LangManager {
                 lang.put("command.login.alreadylogged", "§c¡Ya estás autentificado!");
                 lang.put("command.register.alreadyregistered", "§c¡Ya estás registrado! Usa §f/login §cen su lugar.");
                 lang.put("command.register.globaltype", "§cLa contraseña global está puesta en este servidor, el registro no es posible! Usa §f/login");
+                lang.put("command.register.passweak", "§c¡Esta contraseña es demasiado débil! Por favor, pruebe con una contraseña más segura."); // Google Translator
                 lang.put("command.changepassword.notregistered", "§c¡No estás registrado!");
                 lang.put("command.changepassword.success", "§a¡Contraseña cambiada exitosamente!");
                 lang.put("command.onlineauth.globaltype", "§c¡La contraseña global está puesta en este servidor, la autentificación en línea no es posible! Use §f/login");
@@ -81,6 +83,7 @@ public class LangManager {
                 lang.put("command.login.alreadylogged", "§cAlready authenticated!");
                 lang.put("command.register.alreadyregistered", "§cYou are already registered! Use §f/login §cinstead.");
                 lang.put("command.register.globaltype", "§cGlobal password is set on this server, registration is not possible! Use §f/login");
+                lang.put("command.register.passweak", "§cThis password is too weak! Please, try a stronger one.");
                 lang.put("command.changepassword.notregistered", "§cYou are not registered!");
                 lang.put("command.changepassword.success", "§aChanged password successfully!");
                 lang.put("command.onlineauth.globaltype", "§cGlobal password is set on this server, online auth is not possible! Use §f/login");

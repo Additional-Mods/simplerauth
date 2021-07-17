@@ -10,6 +10,9 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
@@ -40,6 +43,18 @@ public class RegisterCommand {
                         if (!password.equals(passwordRepeat)) {
                             ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);
                             return 1;
+                        }
+
+                        try {
+                            Pattern regex = Pattern.compile(ConfigManager.getString("password-regex"));
+                            Matcher matcher = regex.matcher(password);
+                            if (!matcher.matches()) {
+                                ctx.getSource().sendFeedback(LangManager.getLiteralText("command.register.passweak"), false);
+                                return 1;
+                            }
+                        } catch (Exception e) {
+                            AuthMod.LOGGER.error(LangManager.get("config.incorrect"));
+                            AuthMod.LOGGER.warn("Skipping regex password validation as the config is incorrect.");
                         }
 
                         DbManager.addPlayerDatabase(username, password);

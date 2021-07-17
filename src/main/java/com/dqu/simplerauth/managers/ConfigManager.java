@@ -29,6 +29,7 @@ public class ConfigManager {
             db.addProperty("sessions-enabled", true);
             db.addProperty("sessions-valid-hours", "6");
             db.addProperty("username-regex", "^[A-z0-9_]{3,16}$");
+            db.addProperty("password-regex", "^.{6,}$");
             db.addProperty("password-type", "local");
             db.addProperty("global-password", "123456");
             db.addProperty("forced-online-auth", false);
@@ -150,6 +151,7 @@ public class ConfigManager {
                 db.addProperty("version", VERSION);
                 db.addProperty("require-auth-permission-level", 0);
                 db.addProperty("prevent-logging-another-location", true);
+                db.addProperty("password-regex", "^.{6,}$");
             }
         }
         AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");
