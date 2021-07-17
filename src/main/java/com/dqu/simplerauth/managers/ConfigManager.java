@@ -34,6 +34,7 @@ public class ConfigManager {
             db.addProperty("forced-online-auth", false);
             db.addProperty("optional-online-auth", true);
             db.addProperty("require-auth-permission-level", 0);
+            db.addProperty("prevent-logging-another-location", true);
             db.add("forced-offline-users", new JsonArray());
 
             saveDatabase();
@@ -148,6 +149,7 @@ public class ConfigManager {
             case 3 -> {
                 db.addProperty("version", VERSION);
                 db.addProperty("require-auth-permission-level", 0);
+                db.addProperty("prevent-logging-another-location", true);
             }
         }
         AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");

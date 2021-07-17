@@ -44,6 +44,7 @@ public class LangManager {
                 lang.put("command.onlineauth.disabled", "§aОнлайн авторизация была выключена для вашего аккаунта. Перезайдите чтобы применить изменения.");
                 lang.put("player.invalid_username", "§cНеверное имя пользователя!");
                 lang.put("player.connect.authenticate", "§6Пожалуйста, войдите! Используйте §f/login §6или §f/register§6.");
+                lang.put("player.connect.alreadylogged", "§cЭтот игрок уже присутствует на сервере!");
                 lang.put("command.general.authenticated", "§aВы успешно вошли!");
                 lang.put("command.general.notmatch", "§cПароли не совпадают!");
                 lang.put("config.incorrect", "§cSimplerAuth config is set up wrongly!\nSee the wiki for more information on setting up the config.");
@@ -69,6 +70,7 @@ public class LangManager {
                 lang.put("command.onlineauth.disabled", "§aLa autentificación en línea ha sido desactivada para tu cuenta. Reconéctate al servidor para aplicar los cambios.");
                 lang.put("player.invalid_username", "§c¡Nombre de usuario inválido!");
                 lang.put("player.connect.authenticate", "§6Por favor, autentifícate! Usa §f/login §6o §f/register§6.");
+                lang.put("player.connect.alreadylogged", "§c¡Este jugador ya está presente en el servidor!"); // Google Translator
                 lang.put("command.general.authenticated", "§a¡Autentificado exitosamente!");
                 lang.put("command.general.notmatch", "§c¡Las contraseñas no coinciden!");
                 lang.put("config.incorrect", "§cLa configuración de SimplerAuth está mal configurada!\nMira la wiki para más información sobre como configurar la configuración.");
@@ -94,6 +96,7 @@ public class LangManager {
                 lang.put("command.onlineauth.disabled", "§aOnline auth has been disabled for your account. Reconnect to the server to apply the changes.");
                 lang.put("player.invalid_username", "§cInvalid username!");
                 lang.put("player.connect.authenticate", "§6Please, authenticate! Use §f/login §6or §f/register§6.");
+                lang.put("player.connect.alreadylogged", "§cThis player is already present on the server!");
                 lang.put("command.general.authenticated", "§aAuthenticated successfully!");
                 lang.put("command.general.notmatch", "§cPasswords do not match!");
                 lang.put("config.incorrect", "§cSimplerAuth config is set up wrongly!\nSee the wiki for more information on setting up the config.");
