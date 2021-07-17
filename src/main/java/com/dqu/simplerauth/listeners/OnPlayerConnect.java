@@ -24,6 +24,13 @@ public class OnPlayerConnect {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static void listen(ServerPlayerEntity player) {
+
+        if (!player.hasPermissionLevel(ConfigManager.getInt("require-auth-permission-level"))) {
+            PlayerObject playerObject = AuthMod.playerManager.get(player);
+            playerObject.authenticate(player);
+            return;
+        }
+
         player.setInvulnerable(true);
         player.stopRiding();
         player.sendMessage(LangManager.getLiteralText("player.connect.authenticate"), false);

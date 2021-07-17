@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 public class ConfigManager {
-    public static final int VERSION = 3;
+    public static final int VERSION = 4;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String PATH = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-config.json").toString();
     private static final File DBFILE = new File(PATH);
@@ -33,6 +33,7 @@ public class ConfigManager {
             db.addProperty("global-password", "123456");
             db.addProperty("forced-online-auth", false);
             db.addProperty("optional-online-auth", true);
+            db.addProperty("require-auth-permission-level", 0);
             db.add("forced-offline-users", new JsonArray());
 
             saveDatabase();
@@ -129,23 +130,27 @@ public class ConfigManager {
     }
 
     private static void convertDatabase(int version) {
-        if (version == 1) {
-            db.addProperty("version", VERSION);
-            boolean skipOnlineAuth = db.get("skip-online-auth").getAsBoolean();
-            db.remove("skip-online-auth");
-            db.addProperty("forced-online-auth", false);
-            db.addProperty("optional-online-auth", skipOnlineAuth);
-            db.add("forced-offline-users", new JsonArray());
-
-            AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");
-            saveDatabase();
-        } else if (version == 2) {
-            db.addProperty("version", VERSION);
-            db.addProperty("language", "en");
-            db.addProperty("username-regex", "^[A-z0-9_]{3,16}$");
-
-            AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");
-            saveDatabase();
+        // Older versions are set for compatibility with super-old versions
+        switch (version) {
+            case 1 -> {
+                db.addProperty("version", 2);
+                boolean skipOnlineAuth = db.get("skip-online-auth").getAsBoolean();
+                db.remove("skip-online-auth");
+                db.addProperty("forced-online-auth", false);
+                db.addProperty("optional-online-auth", skipOnlineAuth);
+                db.add("forced-offline-users", new JsonArray());
+            }
+            case 2 -> {
+                db.addProperty("version", 3);
+                db.addProperty("language", "en");
+                db.addProperty("username-regex", "^[A-z0-9_]{3,16}$");
+            }
+            case 3 -> {
+                db.addProperty("version", VERSION);
+                db.addProperty("require-auth-permission-level", 0);
+            }
         }
+        AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");
+        saveDatabase();
     }
 }
