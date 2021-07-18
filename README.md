@@ -24,6 +24,9 @@ Until player logins, it won't be able to:
 - Optional and forced online authentication
 - Global and Local password types
 - Regex username verification
+- Regex password validation
+- Prevents `Logged in from another location`
+- Option for minimum required permission level
 - Multiple languages
 - ...and more!
 
