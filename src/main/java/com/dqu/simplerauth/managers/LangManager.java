@@ -55,8 +55,8 @@ public class LangManager {
                 lang.put("command.login.wrongpassword", "§c¡Contraseña incorrecta!");
                 lang.put("command.login.alreadylogged", "§c¡Ya estás autentificado!");
                 lang.put("command.register.alreadyregistered", "§c¡Ya estás registrado! Usa §f/login §cen su lugar.");
-                lang.put("command.register.globaltype", "§cLa contraseña global está puesta en este servidor, el registro no es posible! Usa §f/login");
-                lang.put("command.register.passweak", "§c¡Esta contraseña es demasiado débil! Por favor, pruebe con una contraseña más segura."); // Google Translator
+                lang.put("command.register.globaltype", "§c¡El servidor tiene una contraseña global, registrarse no es posible! Usa §f/login");
+                lang.put("command.register.passweak", "§c¡Esta contraseña es demasiado débil! Por favor, prueba con una más segura.");
                 lang.put("command.changepassword.notregistered", "§c¡No estás registrado!");
                 lang.put("command.changepassword.success", "§a¡Contraseña cambiada exitosamente!");
                 lang.put("command.onlineauth.globaltype", "§c¡La contraseña global está puesta en este servidor, la autentificación en línea no es posible! Use §f/login");
@@ -71,11 +71,11 @@ public class LangManager {
                 lang.put("command.onlineauth.alreadydisabled", "§c!Ya está desactivada!.");
                 lang.put("command.onlineauth.disabled", "§aLa autentificación en línea ha sido desactivada para tu cuenta. Reconéctate al servidor para aplicar los cambios.");
                 lang.put("player.invalid_username", "§c¡Nombre de usuario inválido!");
-                lang.put("player.connect.authenticate", "§6Por favor, autentifícate! Usa §f/login §6o §f/register§6.");
-                lang.put("player.connect.alreadylogged", "§c¡Este jugador ya está presente en el servidor!"); // Google Translator
+                lang.put("player.connect.authenticate", "§6¡Por favor, autentifícate! Usa §f/login §6o §f/register§6.");
+                lang.put("player.connect.alreadylogged", "§c¡Este jugador ya está presente en el servidor!");
                 lang.put("command.general.authenticated", "§a¡Autentificado exitosamente!");
                 lang.put("command.general.notmatch", "§c¡Las contraseñas no coinciden!");
-                lang.put("config.incorrect", "§cLa configuración de SimplerAuth está mal configurada!\nMira la wiki para más información sobre como configurar la configuración.");
+                lang.put("config.incorrect", "§c¡La configuración de SimplerAuth está mal configurada!\nMira la wiki para más información sobre como configurar la configuración.");
                 break;
             default:
                 lang.put("command.login.notregistered", "§cYou are not registered! Use §f/register §cinstead.");
