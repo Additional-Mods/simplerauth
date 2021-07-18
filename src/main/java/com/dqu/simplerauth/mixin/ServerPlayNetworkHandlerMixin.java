@@ -5,6 +5,7 @@ import com.dqu.simplerauth.listeners.OnGameMessage;
 import com.dqu.simplerauth.listeners.OnPlayerAction;
 import com.dqu.simplerauth.listeners.OnPlayerMove;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
@@ -48,7 +49,7 @@ public class ServerPlayNetworkHandlerMixin {
                 This action only gets triggered when dropping from the main hand
              */
             ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
-            Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, player.getInventory().getSlotWithStack(stack), stack);
+            Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, 1, player.getInventory().getSlotWithStack(stack), stack);
             networkHandler.sendPacket(packet1);
         } else {
             /*
@@ -85,8 +86,8 @@ public class ServerPlayNetworkHandlerMixin {
 
         // Updates clicked slot and the cursor to prevent desync
 
-        Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, slot, stack);
-        Packet packet2 = new ScreenHandlerSlotUpdateS2CPacket(-1, -1, ItemStack.EMPTY);
+        Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, 1, slot, stack);
+        Packet packet2 = new ScreenHandlerSlotUpdateS2CPacket(-1, 1, -1, ItemStack.EMPTY);
 
         networkHandler.sendPacket(packet1); // Updates inventory slot
         networkHandler.sendPacket(packet2); // Updates cursor
@@ -97,6 +98,20 @@ public class ServerPlayNetworkHandlerMixin {
         ServerPlayNetworkHandler networkHandler = (ServerPlayNetworkHandler) (Object) this;
         if (OnClickSlot.canClickSlot(networkHandler)) return;
         ci.cancel();
-        // TODO: update inventory to fix desync
+
+        ServerPlayerEntity player = networkHandler.getPlayer();
+        int slot = packet.getSlot();
+        if (slot < 0) return;
+
+        ItemStack stack = player.getInventory().getStack(slot);
+        // ^ packet.getStack() can cause desync
+
+        // Updates clicked slot and the cursor to prevent desync
+
+        Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, 1, slot, stack);
+        Packet packet2 = new ScreenHandlerSlotUpdateS2CPacket(-1, 1, -1, ItemStack.EMPTY);
+
+        networkHandler.sendPacket(packet1); // Updates inventory slot
+        networkHandler.sendPacket(packet2); // Updates cursor
     }
 }
