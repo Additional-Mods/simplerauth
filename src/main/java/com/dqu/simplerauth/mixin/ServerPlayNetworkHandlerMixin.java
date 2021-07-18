@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
+import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
@@ -89,5 +90,13 @@ public class ServerPlayNetworkHandlerMixin {
 
         networkHandler.sendPacket(packet1); // Updates inventory slot
         networkHandler.sendPacket(packet2); // Updates cursor
+    }
+    
+    @Inject(method = "onCreativeInventoryAction", at = @At("HEAD"), cancellable = true)
+    public void onCreativeInventoryAction(CreativeInventoryActionC2SPacket packet, CallbackInfo ci) {
+        ServerPlayNetworkHandler networkHandler = (ServerPlayNetworkHandler) (Object) this;
+        if (OnClickSlot.canClickSlot(networkHandler)) return;
+        ci.cancel();
+        // TODO: update inventory to fix desync
     }
 }
