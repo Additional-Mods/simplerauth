@@ -37,4 +37,4 @@ Until player logins, it won't be able to:
 
 [Modrinth](https://modrinth.com/mod/simpler-auth)
 [CurseForge](https://www.curseforge.com/minecraft/mc-mods/simpler-auth)
-  
+[Discord](https://discord.gg/g5a7ZA62t3)
