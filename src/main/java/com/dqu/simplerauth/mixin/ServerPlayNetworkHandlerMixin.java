@@ -5,7 +5,6 @@ import com.dqu.simplerauth.listeners.OnGameMessage;
 import com.dqu.simplerauth.listeners.OnPlayerAction;
 import com.dqu.simplerauth.listeners.OnPlayerMove;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
@@ -86,8 +85,8 @@ public class ServerPlayNetworkHandlerMixin {
 
         // Updates clicked slot and the cursor to prevent desync
 
-        Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, 1, slot, stack);
-        Packet packet2 = new ScreenHandlerSlotUpdateS2CPacket(-1, 1, -1, ItemStack.EMPTY);
+        Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, slot, stack);
+        Packet packet2 = new ScreenHandlerSlotUpdateS2CPacket(-1, -1, ItemStack.EMPTY);
 
         networkHandler.sendPacket(packet1); // Updates inventory slot
         networkHandler.sendPacket(packet2); // Updates cursor
@@ -99,17 +98,17 @@ public class ServerPlayNetworkHandlerMixin {
         if (OnClickSlot.canClickSlot(networkHandler)) return;
         ci.cancel();
 
-        ServerPlayerEntity player = networkHandler.getPlayer();
+        ServerPlayerEntity player = networkHandler.player;
         int slot = packet.getSlot();
         if (slot < 0) return;
 
-        ItemStack stack = player.getInventory().getStack(slot);
+        ItemStack stack = player.inventory.getStack(slot);
         // ^ packet.getStack() can cause desync
 
         // Updates clicked slot and the cursor to prevent desync
 
-        Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, 1, slot, stack);
-        Packet packet2 = new ScreenHandlerSlotUpdateS2CPacket(-1, 1, -1, ItemStack.EMPTY);
+        Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, slot, stack);
+        Packet packet2 = new ScreenHandlerSlotUpdateS2CPacket(-1, -1, ItemStack.EMPTY);
 
         networkHandler.sendPacket(packet1); // Updates inventory slot
         networkHandler.sendPacket(packet2); // Updates cursor

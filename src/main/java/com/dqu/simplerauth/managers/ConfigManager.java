@@ -134,25 +134,22 @@ public class ConfigManager {
     private static void convertDatabase(int version) {
         // Older versions are set for compatibility with super-old versions
         switch (version) {
-            case 1 -> {
+            case 1:
                 db.addProperty("version", 2);
                 boolean skipOnlineAuth = db.get("skip-online-auth").getAsBoolean();
                 db.remove("skip-online-auth");
                 db.addProperty("forced-online-auth", false);
                 db.addProperty("optional-online-auth", skipOnlineAuth);
                 db.add("forced-offline-users", new JsonArray());
-            }
-            case 2 -> {
+            case 2:
                 db.addProperty("version", 3);
                 db.addProperty("language", "en");
                 db.addProperty("username-regex", "^[A-z0-9_]{3,16}$");
-            }
-            case 3 -> {
+            case 3:
                 db.addProperty("version", VERSION);
                 db.addProperty("require-auth-permission-level", 0);
                 db.addProperty("prevent-logging-another-location", true);
                 db.addProperty("password-regex", "^.{6,}$");
-            }
         }
         AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");
         saveDatabase();
