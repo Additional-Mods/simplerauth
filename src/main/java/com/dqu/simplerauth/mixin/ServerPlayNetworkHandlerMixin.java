@@ -41,7 +41,7 @@ public class ServerPlayNetworkHandlerMixin {
         if (canInteract) return;
 
         ci.cancel();
-        ServerPlayerEntity player = networkHandler.getPlayer();
+        ServerPlayerEntity player = networkHandler.player;
 
         if (packet.getAction() == PlayerActionC2SPacket.Action.DROP_ITEM || packet.getAction() == PlayerActionC2SPacket.Action.DROP_ALL_ITEMS) {
             /*
@@ -49,7 +49,7 @@ public class ServerPlayNetworkHandlerMixin {
                 This action only gets triggered when dropping from the main hand
              */
             ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
-            Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, 1, player.getInventory().getSlotWithStack(stack), stack);
+            Packet packet1 = new ScreenHandlerSlotUpdateS2CPacket(-2, player.inventory.getSlotWithStack(stack), stack);
             networkHandler.sendPacket(packet1);
         } else {
             /*
@@ -77,11 +77,11 @@ public class ServerPlayNetworkHandlerMixin {
         if (canClickSlot) return;
         ci.cancel();
 
-        ServerPlayerEntity player = networkHandler.getPlayer();
+        ServerPlayerEntity player = networkHandler.player;
         int slot = packet.getSlot();
         if (slot < 0) return; // Clicked outside of the inventory
 
-        ItemStack stack = player.getInventory().getStack(slot);
+        ItemStack stack = player.inventory.getStack(slot);
         // ^ packet.getStack() can cause desync
 
         // Updates clicked slot and the cursor to prevent desync
