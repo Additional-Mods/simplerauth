@@ -6,8 +6,7 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class OnClickSlot {
-    public static boolean canClickSlot(ServerPlayNetworkHandler networkHandler) {
-        ServerPlayerEntity player = networkHandler.player;
+    public static boolean canClickSlot(ServerPlayerEntity player) {
         PlayerObject playerObject = AuthMod.playerManager.get(player);
         return playerObject.isAuthenticated();
     }
