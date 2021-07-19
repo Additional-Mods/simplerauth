@@ -32,7 +32,7 @@ Until player logins, it won't be able to:
 
 **Version Support**
 - ![](https://img.shields.io/badge/1.17.x-Supported-green)
-- ![](https://img.shields.io/badge/1.16.5-Supported-green) (1.16.5 version releases can be delayed)
+- ![](https://img.shields.io/badge/1.16.5-Supported-green) (1.16.5 releases may be delayed)
 - ![](https://img.shields.io/badge/1.16.4%3C-Not%20ported-red)
 
 [Modrinth](https://modrinth.com/mod/simpler-auth)
