@@ -77,6 +77,33 @@ public class LangManager {
                 lang.put("command.general.notmatch", "§c¡Las contraseñas no coinciden!");
                 lang.put("config.incorrect", "§c¡La configuración de SimplerAuth está mal configurada!\nMira la wiki para más información sobre como configurar la configuración.");
                 break;
+            case "cz":
+                lang.put("command.login.notregistered", "§cNejsi registrován! Použij §f/register§c.");
+                lang.put("command.login.wrongpassword", "§cŠpatné heslo!");
+                lang.put("command.login.alreadylogged", "§cÚčet ověřen!");
+                lang.put("command.register.alreadyregistered", "§cJiž jsi zaregistrován! Použij §f/login§c.");
+                lang.put("command.register.globaltype", "§cNa tomto serveru je nastaveno globální heslo, registrace není možná! Použij §f/login§c.");
+                lang.put("command.register.passweak", "§cTohle heslo je příliš slabé! Prosím, zkus použít silnější.");
+                lang.put("command.changepassword.notregistered", "§cNejsi zaregistrován!");
+                lang.put("command.changepassword.success", "§aHeslo bylo úspěšně změněno!");
+                lang.put("command.onlineauth.globaltype", "§cNa tomto serveru je nastaveno globální heslo, online autentizace není možná! Použij §f/login§c.");
+                lang.put("command.onlineauth.notregistered", "§cNejsi zaregistrován! Použij §f/register §cpřed zapnutím online autentizace.");
+                lang.put("command.onlineauth.featuredisabled", "§cNa tomto serveru není povolena volitelná funkce online autentizace!");
+                lang.put("command.onlineauth.warning", "§cZtratíte všechna data spojená s vaším UUID, jako je inventář, ender truhla, statistiky, pokroky, slevy pro vesničany atd.");
+                lang.put("command.onlineauth.cannotenable", "§cOficiální účet s tímto uživatelským jménem neexistuje! Tuto funkci nelze povolit.");
+                lang.put("command.onlineauth.confirmenable", "§6Pro potvrzení použij §f/onlineauth enable <heslo>§6. Můžeš ji zakázat pomocí §f/onlineauth disable§6.");
+                lang.put("command.onlineauth.alreadyenabled", "§cJiž povoleno!");
+                lang.put("command.onlineauth.enabled", "§aOnline autentizace byla pro tvůj účet povolena. Znovu se připoj k serveru, aby se aplikovaly změny.");
+                lang.put("command.onlineauth.confirmdisable", "§6Pro potvrzení použij §f/onlineauth disable <heslo>§6. Můžeš ji znovu povolit pomocí §f/onlineauth§6.");
+                lang.put("command.onlineauth.alreadydisabled", "§cJiž zakázáno!");
+                lang.put("command.onlineauth.disabled", "§aOnline autentizace byla pro tvůj účet zakázána. Pro provedení změn se znovu připoj k serveru.");
+                lang.put("player.invalid_username", "§cNeplatné uživatelské jméno!");
+                lang.put("player.connect.authenticate", "§6Prosím, ověř svůj účet! Použij §f/login §6nebo §f/register§6.");
+                lang.put("player.connect.alreadylogged", "§cTento hráč je již na serveru přítomen!");
+                lang.put("command.general.authenticated", "§aOvěření proběhlo úspěšně!");
+                lang.put("command.general.notmatch", "§cHesla se neshodují!");
+                lang.put("config.incorrect", "§cKonfigurace SimplerAuth je špatně nastavena!\nDalší informace o nastavení konfigurace naleznete na wiki.");
+                break;
             default:
                 lang.put("command.login.notregistered", "§cYou are not registered! Use §f/register §cinstead.");
                 lang.put("command.login.wrongpassword", "§cWrong password!");
