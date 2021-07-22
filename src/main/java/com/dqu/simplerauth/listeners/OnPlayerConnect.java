@@ -37,8 +37,9 @@ public class OnPlayerConnect {
 
         boolean forcedOnlineAuth = ConfigManager.getBoolean("forced-online-auth");
         boolean optionalOnlineAuth = ConfigManager.getBoolean("optional-online-auth");
+        boolean isGlobalAuth = ConfigManager.getAuthType().equals("global");
         // Forced online authentication does not require registration
-        if ((forcedOnlineAuth || (optionalOnlineAuth && DbManager.isPlayerRegistered(player.getEntityName()))) && testPlayerOnline(player)) {
+        if ((forcedOnlineAuth || (optionalOnlineAuth && DbManager.isPlayerRegistered(player.getEntityName()))) && testPlayerOnline(player) && !isGlobalAuth) {
             PlayerObject playerObject = AuthMod.playerManager.get(player);
             playerObject.authenticate(player);
             player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);

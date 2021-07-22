@@ -16,7 +16,7 @@
   "command.onlineauth.alreadyenabled": "§cВже увімкнено!",
   "command.onlineauth.enabled": "§aОнлайн авторізация була увімкнена для вашого аккаунта. Перезайдіть щоб застосувати зміни.",
   "command.onlineauth.confirmdisable": "§6Для підтвердження, скористайтесь §f/onlineauth disable <пароль>§6. Ви зможете увімкнути це знов скориставшись §f/onlineauth§6.",
-  "command.onlineauth.alreadydisabled": "§cУже вимкнено!",
+  "command.onlineauth.alreadydisabled": "§cВже вимкнено!",
   "command.onlineauth.disabled": "§aОнлайн авторізация була вимкнена для вашого аккаунта. Перезайдіть щоб застосувати зміни.",
   "player.invalid_username": "§cНевірне ім'я користувача!",
   "player.connect.authenticate": "§6Будь ласка, увійдіть! Скористайтеся §f/login §6або §f/register§6.",
