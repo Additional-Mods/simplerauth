@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 public class ConfigManager {
-    public static final int VERSION = 4;
+    public static final int VERSION = 5;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String PATH = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-config.json").toString();
     private static final File DBFILE = new File(PATH);
@@ -25,7 +25,7 @@ public class ConfigManager {
         if (!DBFILE.exists()) {
             db.addProperty("version", VERSION);
 
-            db.addProperty("language", "en");
+            db.addProperty("language", "en_us");
             db.addProperty("sessions-enabled", true);
             db.addProperty("sessions-valid-hours", "6");
             db.addProperty("username-regex", "^[A-z0-9_]{3,16}$");
@@ -148,10 +148,21 @@ public class ConfigManager {
                 db.addProperty("username-regex", "^[A-z0-9_]{3,16}$");
             }
             case 3 -> {
-                db.addProperty("version", VERSION);
+                db.addProperty("version", 4);
                 db.addProperty("require-auth-permission-level", 0);
                 db.addProperty("prevent-logging-another-location", true);
                 db.addProperty("password-regex", "^.{6,}$");
+            }
+            case 4 -> {
+                String language = db.get("language").getAsString();
+                language = switch (language) {
+                    case "ru" -> "ru_ru";
+                    case "es" -> "es_es";
+                    default -> "en_us";
+                };
+
+                db.addProperty("language", language);
+                db.addProperty("version", VERSION);
             }
         }
         AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");
