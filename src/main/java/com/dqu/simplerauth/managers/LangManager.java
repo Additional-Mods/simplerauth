@@ -9,6 +9,7 @@ import net.minecraft.text.LiteralText;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class LangManager {
     private static JsonObject lang = new JsonObject();
@@ -26,7 +27,7 @@ public class LangManager {
         try {
             String path = String.format("assets/simplerauth/lang/%s.json", language);
             InputStream inputStream = AuthMod.class.getClassLoader().getResourceAsStream(path);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             lang = GSON.fromJson(bufferedReader, JsonObject.class);
         } catch (Exception e) {
             AuthMod.LOGGER.error("[SimplerAuth] Unable to load translation files!");
