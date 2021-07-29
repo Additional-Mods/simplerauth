@@ -31,6 +31,7 @@ public class AuthMod implements ModInitializer {
             RegisterCommand.registerCommand(dispatcher);
             ChangePasswordCommand.registerCommand(dispatcher);
             OnlineAuthCommand.registerCommand(dispatcher);
+            SimplerAuthCommand.registerCommand(dispatcher);
         }));
     }
 

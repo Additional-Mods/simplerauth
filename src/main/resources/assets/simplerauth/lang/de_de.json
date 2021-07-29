@@ -23,5 +23,6 @@
   "player.connect.alreadylogged": "§cDieser Spieler ist schon auf dem Server vorhanden!",
   "command.general.authenticated": "§aAuthentifizierung erfolgreich!",
   "command.general.notmatch": "§cPasswörter stimmen nicht überein!",
-  "config.incorrect": "§cSimplerAuth configuration is falsch eingestellt!\nSchauen sie sich die Wiki für mehr informationen über das einstellen der Configuration an."
+  "config.incorrect": "§cSimplerAuth configuration is falsch eingestellt!\nSchauen sie sich die Wiki für mehr informationen über das einstellen der Configuration an.",
+  "config.reload": "§aSimplerAuth config has been reloaded successfully!"
 }

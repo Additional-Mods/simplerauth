@@ -23,5 +23,6 @@
   "player.connect.alreadylogged": "§cЦій гравець вже є на сервері!",
   "command.general.authenticated": "§aВи успішно увійшли!",
   "command.general.notmatch": "§cПаролі не співпадають!",
-  "config.incorrect": "§cКонфігурація SimplerAuth настроєна невірно!\nПерегляньте wiki для більшей інформації о настройках файлу конфігурації."
+  "config.incorrect": "§cКонфігурація SimplerAuth настроєна невірно!\nПерегляньте wiki для більшей інформації о настройках файлу конфігурації.",
+  "config.reload": "§acКонфігурація SimplerAuth була успішно перезагружена!"
 }
