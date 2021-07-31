@@ -62,6 +62,8 @@ public class OnPlayerConnect {
 
         boolean hideposition = ConfigManager.getBoolean("hide-position");
         if (hideposition) {
+            if (player.getX() > -1 && player.getX() < 1 && player.getZ() > -1 && player.getZ() < 1 && player.getY() < 1)
+                return;
             DbManager.savePosition(player.getEntityName(), player.getPos());
             player.requestTeleport(0, 0, 0);
         }
