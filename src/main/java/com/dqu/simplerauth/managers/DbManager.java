@@ -4,6 +4,7 @@ import com.dqu.simplerauth.AuthMod;
 import com.google.common.io.Files;
 import com.google.gson.*;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.util.math.Vec3d;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -138,6 +139,21 @@ public class DbManager {
         JsonObject user = getPlayer(username);
         if (user == null || !user.has("online-auth")) return false;
         return user.get("online-auth").getAsBoolean();
+    }
+
+    public static void savePosition(String username, Vec3d position) {
+        JsonObject user = getPlayer(username);
+        if (user == null) return;
+        user.addProperty("lastPosition", position.toString());
+    }
+
+    public static Vec3d getPosition(String username) {
+        JsonObject user = getPlayer(username);
+        if (user == null || !user.has("lastPosition")) return null;
+        String pos = user.get("lastPosition").getAsString();
+        if (pos == null) return null;
+        String[] spos = pos.replace("(", "").replace(")", "").split(",");
+        return new Vec3d(Double.parseDouble(spos[0]), Double.parseDouble(spos[1]), Double.parseDouble(spos[2]));
     }
 
     private static void convertDatabase(int version) {

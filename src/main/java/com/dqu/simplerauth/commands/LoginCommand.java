@@ -9,6 +9,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.math.Vec3d;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -60,6 +61,12 @@ public class LoginCommand {
                     } else {
                         // Config setup is wrong, kick the player
                         player.networkHandler.disconnect(LangManager.getLiteralText("config.incorrect"));
+                    }
+
+                    boolean hideposition = ConfigManager.getBoolean("hide-position");
+                    if (hideposition) {
+                        Vec3d pos = DbManager.getPosition(username);
+                        player.requestTeleport(pos.getX(), pos.getY(), pos.getZ());
                     }
 
                     return 1;

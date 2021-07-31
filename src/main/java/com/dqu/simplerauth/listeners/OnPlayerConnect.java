@@ -54,9 +54,16 @@ public class OnPlayerConnect {
                 playerObject.authenticate(player);
                 DbManager.sessionCreate(player.getEntityName(), player.getIp());
                 player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
+                return;
             } else {
                 DbManager.sessionDestroy(player.getEntityName());
             }
+        }
+
+        boolean hideposition = ConfigManager.getBoolean("hide-position");
+        if (hideposition) {
+            DbManager.savePosition(player.getEntityName(), player.getPos());
+            player.requestTeleport(0, 0, 0);
         }
     }
 

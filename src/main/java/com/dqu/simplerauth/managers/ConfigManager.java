@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 public class ConfigManager {
-    public static final int VERSION = 5;
+    public static final int VERSION = 6;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String PATH = FabricLoader.getInstance().getConfigDir().resolve("simplerauth-config.json").toString();
     private static final File DBFILE = new File(PATH);
@@ -36,6 +36,7 @@ public class ConfigManager {
             db.addProperty("optional-online-auth", true);
             db.addProperty("require-auth-permission-level", 0);
             db.addProperty("prevent-logging-another-location", true);
+            db.addProperty("hide-position", false);
             db.add("forced-offline-users", new JsonArray());
 
             saveDatabase();
@@ -162,6 +163,10 @@ public class ConfigManager {
                 };
 
                 db.addProperty("language", language);
+                db.addProperty("version", 5);
+            }
+            case 5 -> {
+                db.addProperty("hide-position", false);
                 db.addProperty("version", VERSION);
             }
         }
