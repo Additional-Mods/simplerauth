@@ -145,6 +145,7 @@ public class DbManager {
         JsonObject user = getPlayer(username);
         if (user == null) return;
         user.addProperty("lastPosition", position.toString());
+        saveDatabase();
     }
 
     public static Vec3d getPosition(String username) {

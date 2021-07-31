@@ -66,7 +66,8 @@ public class LoginCommand {
                     boolean hideposition = ConfigManager.getBoolean("hide-position");
                     if (hideposition) {
                         Vec3d pos = DbManager.getPosition(username);
-                        player.requestTeleport(pos.getX(), pos.getY(), pos.getZ());
+                        if (pos != null)
+                            player.requestTeleport(pos.getX(), pos.getY(), pos.getZ());
                     }
 
                     return 1;
