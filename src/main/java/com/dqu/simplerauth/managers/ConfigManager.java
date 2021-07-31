@@ -172,5 +172,6 @@ public class ConfigManager {
         }
         AuthMod.LOGGER.info("[SimplerAuth] Updated outdated config.");
         saveDatabase();
+        if (db.get("version").getAsInt() != VERSION) convertDatabase(db.get("version").getAsInt());
     }
 }
