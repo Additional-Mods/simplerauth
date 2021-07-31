@@ -9,7 +9,7 @@ public class OnPlayerMove {
         PlayerObject playerObject = AuthMod.playerManager.get(player);
         boolean authenticated = playerObject.isAuthenticated();
         if (!authenticated) {
-            player.teleport(player.getX(), player.getY(), player.getZ());
+            player.requestTeleport(player.getX(), player.getY(), player.getZ());
         }
         return authenticated;
     }
