@@ -23,6 +23,7 @@
   "player.connect.alreadylogged": "§cTento hráč je již na serveru přítomen!",
   "command.general.authenticated": "§aOvěření proběhlo úspěšně!",
   "command.general.notmatch": "§cHesla se neshodují!",
+  "command.general.success": "§aÚspěch!",
   "config.incorrect": "§cKonfigurace SimplerAuth je špatně nastavena!\nDalší informace o nastavení konfigurace naleznete na wiki.",
   "config.reload": "§aSimplerAuth config has been reloaded successfully!"
 }

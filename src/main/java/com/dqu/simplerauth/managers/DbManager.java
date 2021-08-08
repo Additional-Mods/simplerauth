@@ -68,6 +68,13 @@ public class DbManager {
         return !PassManager.isUnregistered(hash);
     }
 
+    public static void unregister(String username) {
+        JsonObject user = getPlayer(username);
+        if (user == null) return;
+        user.addProperty("password", "none");
+        saveDatabase();
+    }
+
     public static void addPlayerDatabase(String username, String password) {
         if (isPlayerRegistered(username)) return;
         JsonObject user = getPlayer(username);

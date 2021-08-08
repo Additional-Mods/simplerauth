@@ -23,6 +23,7 @@
   "player.connect.alreadylogged": "§c¡Este jugador ya está presente en el servidor!",
   "command.general.authenticated": "§a¡Autentificado exitosamente!",
   "command.general.notmatch": "§c¡Las contraseñas no coinciden!",
+  "command.general.success": "§a¡Éxito!",
   "config.incorrect": "§c¡La configuración de SimplerAuth está mal configurada!\nMira la wiki para más información sobre como configurar la configuración.",
   "config.reload": "§aSimplerAuth config has been reloaded successfully!"
 }
