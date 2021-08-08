@@ -62,17 +62,26 @@ public class DbManager {
     }
 
     public static boolean isPlayerRegistered(String username) {
-        return getPlayer(username) != null;
+        JsonObject user = getPlayer(username);
+        if (user == null) return false;
+        String hash = user.get("password").getAsString();
+        return !PassManager.isUnregistered(hash);
     }
 
     public static void addPlayerDatabase(String username, String password) {
-        JsonArray users = db.get("users").getAsJsonArray();
         if (isPlayerRegistered(username)) return;
-        JsonObject user = new JsonObject();
-        String hashed = PassManager.encrypt(password);
-        user.addProperty("user", username);
-        user.addProperty("password", hashed);
-        users.add(user);
+        JsonObject user = getPlayer(username);
+        JsonArray users = db.get("users").getAsJsonArray();
+        if (user == null) {
+            JsonObject newUser  = new JsonObject();
+            String hashed = PassManager.encrypt(password);
+            newUser.addProperty("user", username);
+            newUser.addProperty("password", hashed);
+            users.add(newUser);
+        } else {
+            String hashed = PassManager.encrypt(password);
+            user.addProperty("password", hashed);
+        }
         saveDatabase();
     }
 

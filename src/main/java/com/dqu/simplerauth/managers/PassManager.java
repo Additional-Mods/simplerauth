@@ -35,6 +35,10 @@ public class PassManager {
         return null;
     }
 
+    public static boolean isUnregistered(String hash) {
+        return hash.equalsIgnoreCase("none");
+    }
+
     public static boolean verify(String password, String hash) {
         String salt = hash.split(":")[0];
         String newHash = encrypt(password, fromHex(salt));
