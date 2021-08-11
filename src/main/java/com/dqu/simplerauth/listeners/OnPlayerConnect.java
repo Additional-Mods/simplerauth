@@ -62,7 +62,7 @@ public class OnPlayerConnect {
             }
         }
 
-        if (ConfigManager.getBoolean("hide-position")) {
+        if (ConfigManager.getBoolean("hide-position") && DbManager.isPlayerRegistered(player.getEntityName())) {
             if (player.getX() > -1 && player.getX() < 1 && player.getZ() > -1 && player.getZ() < 1 && player.getY() < 1)
                 return;
             DbManager.savePosition(player.getEntityName(), player.getPos());
