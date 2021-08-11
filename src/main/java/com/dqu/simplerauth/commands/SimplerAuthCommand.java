@@ -1,6 +1,5 @@
 package com.dqu.simplerauth.commands;
 
-import com.dqu.simplerauth.AuthMod;
 import com.dqu.simplerauth.managers.CacheManager;
 import com.dqu.simplerauth.managers.ConfigManager;
 import com.dqu.simplerauth.managers.DbManager;
