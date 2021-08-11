@@ -42,7 +42,7 @@ public class LoginCommand {
             player.networkHandler.disconnect(LangManager.getLiteralText("command.general.notmatch"));
             return 0;
         }
-        playerObject.authenticate(player);
+        playerObject.authenticate();
         if (ConfigManager.getBoolean("sessions-enabled")) {
             DbManager.sessionCreate(player.getEntityName(), player.getIp());
         }

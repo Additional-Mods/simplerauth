@@ -59,7 +59,7 @@ public class RegisterCommand {
 
                         DbManager.addPlayerDatabase(username, password);
                         PlayerObject playerObject = AuthMod.playerManager.get(player);
-                        playerObject.authenticate(player);
+                        playerObject.authenticate();
                         ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.authenticated"), false);
                         return 1;
                     })

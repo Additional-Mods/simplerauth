@@ -25,9 +25,10 @@ public class OnPlayerConnect {
 
     public static void listen(ServerPlayerEntity player) {
         PlayerObject playerObject = AuthMod.playerManager.get(player);
+        playerObject.updatePlayer(player);
 
         if (!player.hasPermissionLevel(ConfigManager.getInt("require-auth-permission-level"))) {
-            playerObject.authenticate(player);
+            playerObject.authenticate();
             return;
         }
 
@@ -36,7 +37,7 @@ public class OnPlayerConnect {
         boolean isGlobalAuth = ConfigManager.getAuthType().equals("global");
         // Forced online authentication does not require registration
         if ((forcedOnlineAuth || (optionalOnlineAuth && DbManager.isPlayerRegistered(player.getEntityName()))) && testPlayerOnline(player) && !isGlobalAuth) {
-            playerObject.authenticate(player);
+            playerObject.authenticate();
             player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
             AuthMod.LOGGER.info(player.getEntityName() + " is using an online account, authenticated automatically.");
             return;
@@ -44,7 +45,7 @@ public class OnPlayerConnect {
 
         if (ConfigManager.getBoolean("sessions-enabled")) {
             if (DbManager.sessionVerify(player.getEntityName(), player.getIp())) {
-                playerObject.authenticate(player);
+                playerObject.authenticate();
                 DbManager.sessionCreate(player.getEntityName(), player.getIp());
                 player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
                 return;
