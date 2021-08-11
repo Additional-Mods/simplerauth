@@ -24,33 +24,26 @@ public class OnPlayerConnect {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static void listen(ServerPlayerEntity player) {
+        PlayerObject playerObject = AuthMod.playerManager.get(player);
 
         if (!player.hasPermissionLevel(ConfigManager.getInt("require-auth-permission-level"))) {
-            PlayerObject playerObject = AuthMod.playerManager.get(player);
             playerObject.authenticate(player);
             return;
         }
-
-        player.setInvulnerable(true);
-        player.stopRiding();
-        player.sendMessage(LangManager.getLiteralText("player.connect.authenticate"), false);
 
         boolean forcedOnlineAuth = ConfigManager.getBoolean("forced-online-auth");
         boolean optionalOnlineAuth = ConfigManager.getBoolean("optional-online-auth");
         boolean isGlobalAuth = ConfigManager.getAuthType().equals("global");
         // Forced online authentication does not require registration
         if ((forcedOnlineAuth || (optionalOnlineAuth && DbManager.isPlayerRegistered(player.getEntityName()))) && testPlayerOnline(player) && !isGlobalAuth) {
-            PlayerObject playerObject = AuthMod.playerManager.get(player);
             playerObject.authenticate(player);
             player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
             AuthMod.LOGGER.info(player.getEntityName() + " is using an online account, authenticated automatically.");
             return;
         }
 
-        boolean sessionenabled = ConfigManager.getBoolean("sessions-enabled");
-        if (sessionenabled) {
+        if (ConfigManager.getBoolean("sessions-enabled")) {
             if (DbManager.sessionVerify(player.getEntityName(), player.getIp())) {
-                PlayerObject playerObject = AuthMod.playerManager.get(player);
                 playerObject.authenticate(player);
                 DbManager.sessionCreate(player.getEntityName(), player.getIp());
                 player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
@@ -60,8 +53,11 @@ public class OnPlayerConnect {
             }
         }
 
-        boolean hideposition = ConfigManager.getBoolean("hide-position");
-        if (hideposition) {
+        player.setInvulnerable(true);
+        player.stopRiding();
+        player.sendMessage(LangManager.getLiteralText("player.connect.authenticate"), false);
+
+        if (ConfigManager.getBoolean("hide-position")) {
             if (player.getX() > -1 && player.getX() < 1 && player.getZ() > -1 && player.getZ() < 1 && player.getY() < 1)
                 return;
             DbManager.savePosition(player.getEntityName(), player.getPos());

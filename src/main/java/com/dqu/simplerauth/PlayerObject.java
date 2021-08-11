@@ -12,11 +12,10 @@ public class PlayerObject {
     }
 
     public void authenticate(ServerPlayerEntity player) {
-        if (!player.isCreative()) player.setInvulnerable(false);
+        player.setInvulnerable(false);
         this.authenticated = true;
     }
 
-    @Deprecated
     public void authenticate() {
         this.authenticated = true;
     }
