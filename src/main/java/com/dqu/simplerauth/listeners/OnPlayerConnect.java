@@ -9,7 +9,10 @@ import com.dqu.simplerauth.managers.LangManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import net.minecraft.block.Blocks;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.MathHelper;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -58,11 +61,30 @@ public class OnPlayerConnect {
         player.stopRiding();
         player.sendMessage(LangManager.getLiteralText("player.connect.authenticate"), false);
 
-        if (ConfigManager.getBoolean("hide-position")) {
+        if (ConfigManager.getBoolean("hide-position") && DbManager.isPlayerRegistered(player.getEntityName())) {
             if (player.getX() > -1 && player.getX() < 1 && player.getZ() > -1 && player.getZ() < 1 && player.getY() < 1)
                 return;
             DbManager.savePosition(player.getEntityName(), player.getPos());
             player.requestTeleport(0, 0, 0);
+        } else if (ConfigManager.getBoolean("portal-teleport")) { // Not needed when player is in the void
+            if (player.getServerWorld().getBlockState(player.getBlockPos()).isOf(Blocks.NETHER_PORTAL)) {
+                teleportPlayerAway(player);
+            }
+        }
+    }
+
+    public static void teleportPlayerAway(ServerPlayerEntity player) {
+        // Modified ChorusFruitItem#finishUsing
+        boolean teleported = false;
+        ServerWorld world = player.getServerWorld();
+        while (!teleported) {
+            double x = player.getX() + (player.getRandom().nextDouble() - 0.5D) * 16.0D;
+            double y = MathHelper.clamp(player.getY() + (double)(player.getRandom().nextInt(16) - 8), world.getBottomY(), world.getBottomY() + world.getLogicalHeight() - 1);
+            double z = player.getZ() + (player.getRandom().nextDouble() - 0.5D) * 16.0D;
+
+            if (player.teleport(x, y, z, true)) {
+                teleported = true;
+            }
         }
     }
 
