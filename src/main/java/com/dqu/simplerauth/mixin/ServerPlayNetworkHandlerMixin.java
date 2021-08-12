@@ -29,7 +29,7 @@ public abstract class ServerPlayNetworkHandlerMixin {
     @Shadow public ServerPlayerEntity player;
     @Shadow public abstract void sendPacket(Packet<?> packet);
 
-    @Inject(method = "onPlayerMove", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "onPlayerMove", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkThreadUtils;forceMainThread(Lnet/minecraft/network/Packet;Lnet/minecraft/network/listener/PacketListener;Lnet/minecraft/server/world/ServerWorld;)V", shift = At.Shift.AFTER), cancellable = true)
     public void onPlayerMove(PlayerMoveC2SPacket packet, CallbackInfo ci) {
         if (!OnPlayerMove.canMove(this.player)) {
             ci.cancel();
