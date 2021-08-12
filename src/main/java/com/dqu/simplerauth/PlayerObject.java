@@ -3,7 +3,7 @@ package com.dqu.simplerauth;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class PlayerObject {
-    private final ServerPlayerEntity player;
+    private ServerPlayerEntity player;
     private boolean authenticated;
 
     public PlayerObject(ServerPlayerEntity player) {
@@ -11,13 +11,8 @@ public class PlayerObject {
         this.authenticated = false;
     }
 
-    public void authenticate(ServerPlayerEntity player) {
-        player.setInvulnerable(false);
-        this.authenticated = true;
-    }
-
-    @Deprecated
     public void authenticate() {
+        this.player.setInvulnerable(false);
         this.authenticated = true;
     }
 
@@ -27,6 +22,12 @@ public class PlayerObject {
 
     public ServerPlayerEntity getPlayer() {
         return player;
+    }
+
+    public void updatePlayer(ServerPlayerEntity player) {
+        if (this.player != player) {
+            this.player = player;
+        }
     }
 
     public void destroy() {

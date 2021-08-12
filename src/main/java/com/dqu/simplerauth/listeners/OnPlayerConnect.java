@@ -2,6 +2,7 @@ package com.dqu.simplerauth.listeners;
 
 import com.dqu.simplerauth.AuthMod;
 import com.dqu.simplerauth.PlayerObject;
+import com.dqu.simplerauth.api.event.PlayerAuthEvents;
 import com.dqu.simplerauth.managers.CacheManager;
 import com.dqu.simplerauth.managers.ConfigManager;
 import com.dqu.simplerauth.managers.DbManager;
@@ -27,33 +28,31 @@ public class OnPlayerConnect {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static void listen(ServerPlayerEntity player) {
+        PlayerObject playerObject = AuthMod.playerManager.get(player);
+        playerObject.updatePlayer(player);
+
         if (!player.hasPermissionLevel(ConfigManager.getInt("require-auth-permission-level"))) {
-            PlayerObject playerObject = AuthMod.playerManager.get(player);
-            playerObject.authenticate(player);
+            playerObject.authenticate();
+            PlayerAuthEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player, "permissionLevel");
             return;
         }
-
-        player.setInvulnerable(true);
-        player.stopRiding();
-        player.sendMessage(LangManager.getLiteralText("player.connect.authenticate"), false);
 
         boolean forcedOnlineAuth = ConfigManager.getBoolean("forced-online-auth");
         boolean optionalOnlineAuth = ConfigManager.getBoolean("optional-online-auth");
         boolean isGlobalAuth = ConfigManager.getAuthType().equals("global");
         // Forced online authentication does not require registration
         if ((forcedOnlineAuth || (optionalOnlineAuth && DbManager.isPlayerRegistered(player.getEntityName()))) && testPlayerOnline(player) && !isGlobalAuth) {
-            PlayerObject playerObject = AuthMod.playerManager.get(player);
-            playerObject.authenticate(player);
+            playerObject.authenticate();
+            PlayerAuthEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player, "onlineAuth");
             player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
             AuthMod.LOGGER.info(player.getEntityName() + " is using an online account, authenticated automatically.");
             return;
         }
 
-        boolean sessionenabled = ConfigManager.getBoolean("sessions-enabled");
-        if (sessionenabled) {
+        if (ConfigManager.getBoolean("sessions-enabled")) {
             if (DbManager.sessionVerify(player.getEntityName(), player.getIp())) {
-                PlayerObject playerObject = AuthMod.playerManager.get(player);
-                playerObject.authenticate(player);
+                playerObject.authenticate();
+                PlayerAuthEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player, "session");
                 DbManager.sessionCreate(player.getEntityName(), player.getIp());
                 player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
                 return;
@@ -61,6 +60,10 @@ public class OnPlayerConnect {
                 DbManager.sessionDestroy(player.getEntityName());
             }
         }
+
+        player.setInvulnerable(true);
+        player.stopRiding();
+        player.sendMessage(LangManager.getLiteralText("player.connect.authenticate"), false);
 
         if (ConfigManager.getBoolean("hide-position") && DbManager.isPlayerRegistered(player.getEntityName())) {
             if (player.getX() > -1 && player.getX() < 1 && player.getZ() > -1 && player.getZ() < 1 && player.getY() < 1)
