@@ -2,6 +2,7 @@ package com.dqu.simplerauth.listeners;
 
 import com.dqu.simplerauth.AuthMod;
 import com.dqu.simplerauth.PlayerObject;
+import com.dqu.simplerauth.api.event.PlayerAuthEvents;
 import com.dqu.simplerauth.managers.CacheManager;
 import com.dqu.simplerauth.managers.ConfigManager;
 import com.dqu.simplerauth.managers.DbManager;
@@ -32,6 +33,7 @@ public class OnPlayerConnect {
 
         if (!player.hasPermissionLevel(ConfigManager.getInt("require-auth-permission-level"))) {
             playerObject.authenticate();
+            PlayerAuthEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player, "permissionLevel");
             return;
         }
 
@@ -41,6 +43,7 @@ public class OnPlayerConnect {
         // Forced online authentication does not require registration
         if ((forcedOnlineAuth || (optionalOnlineAuth && DbManager.isPlayerRegistered(player.getEntityName()))) && testPlayerOnline(player) && !isGlobalAuth) {
             playerObject.authenticate();
+            PlayerAuthEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player, "onlineAuth");
             player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
             AuthMod.LOGGER.info(player.getEntityName() + " is using an online account, authenticated automatically.");
             return;
@@ -49,6 +52,7 @@ public class OnPlayerConnect {
         if (ConfigManager.getBoolean("sessions-enabled")) {
             if (DbManager.sessionVerify(player.getEntityName(), player.getIp())) {
                 playerObject.authenticate();
+                PlayerAuthEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player, "session");
                 DbManager.sessionCreate(player.getEntityName(), player.getIp());
                 player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);
                 return;

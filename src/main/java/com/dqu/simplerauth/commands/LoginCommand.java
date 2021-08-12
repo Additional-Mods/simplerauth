@@ -5,6 +5,7 @@ import com.dqu.simplerauth.managers.ConfigManager;
 import com.dqu.simplerauth.managers.DbManager;
 import com.dqu.simplerauth.managers.LangManager;
 import com.dqu.simplerauth.PlayerObject;
+import com.dqu.simplerauth.api.event.PlayerAuthEvents;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -39,10 +40,12 @@ public class LoginCommand {
         
         if (!isPasswordCorrect(username, password)) {
             // TODO: fails and kick after x fails
+            PlayerAuthEvents.PLAYER_LOGIN_FAIL.invoker().onPlayerLoginFail(player, 1);
             player.networkHandler.disconnect(LangManager.getLiteralText("command.general.notmatch"));
             return 0;
         }
         playerObject.authenticate();
+        PlayerAuthEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player, "loginCommand");
         if (ConfigManager.getBoolean("sessions-enabled")) {
             DbManager.sessionCreate(player.getEntityName(), player.getIp());
         }
