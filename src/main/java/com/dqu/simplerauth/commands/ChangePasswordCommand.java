@@ -48,6 +48,10 @@ public class ChangePasswordCommand {
 
                         DbManager.setPassword(username, newPassword);
                         ctx.getSource().sendFeedback(LangManager.getLiteralText("command.changepassword.success"), false);
+                        if (DbManager.getTwoFactorEnabled(username)) {
+                            DbManager.setTwoFactorEnabled(username, false);
+                            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.2fa.changed"), false);
+                        }
                         return 1;
 
                     })

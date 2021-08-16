@@ -42,6 +42,10 @@ public class OnPlayerConnect {
         boolean isGlobalAuth = ConfigManager.getAuthType().equals("global");
         // Forced online authentication does not require registration
         if ((forcedOnlineAuth || (optionalOnlineAuth && DbManager.isPlayerRegistered(player.getEntityName()))) && testPlayerOnline(player) && !isGlobalAuth) {
+            if (DbManager.getTwoFactorEnabled(player.getEntityName())) {
+                player.sendMessage(LangManager.getLiteralText("player.connect.authenticate.2fa"), false);
+                return;
+            }
             playerObject.authenticate();
             PlayerAuthEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player, "onlineAuth");
             player.sendMessage(LangManager.getLiteralText("command.general.authenticated"), false);

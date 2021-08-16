@@ -64,7 +64,7 @@ public class DbManager {
     public static boolean isPlayerRegistered(String username) {
         JsonObject user = getPlayer(username);
         if (user == null) return false;
-        String hash = user.get("password").getAsString();
+        String hash = getHash(username);
         return !PassManager.isUnregistered(hash);
     }
 
@@ -72,6 +72,7 @@ public class DbManager {
         JsonObject user = getPlayer(username);
         if (user == null) return;
         user.addProperty("password", "none");
+        if (DbManager.getTwoFactorEnabled(username)) DbManager.setTwoFactorEnabled(username, false);
         saveDatabase();
     }
 
@@ -95,7 +96,7 @@ public class DbManager {
     public static boolean isPasswordCorrect(String username, String password) {
         JsonObject user = getPlayer(username);
         if (user == null) return false;
-        String hashed = user.get("password").getAsString();
+        String hashed = getHash(username);
         return PassManager.verify(password, hashed);
     }
 
@@ -148,6 +149,7 @@ public class DbManager {
         JsonObject user = getPlayer(username);
         if (user == null) return;
         user.addProperty("online-auth", onlineAuth);
+        if (DbManager.getTwoFactorEnabled(username)) DbManager.setTwoFactorEnabled(username, false);
         saveDatabase();
     }
 
@@ -171,6 +173,25 @@ public class DbManager {
         if (pos == null) return null;
         String[] spos = pos.replace("(", "").replace(")", "").split(",");
         return new Vec3d(Double.parseDouble(spos[0]), Double.parseDouble(spos[1]), Double.parseDouble(spos[2]));
+    }
+
+    public static boolean getTwoFactorEnabled(String username) {
+        JsonObject user = getPlayer(username);
+        if (user == null || !user.has("2fa")) return false;
+        return user.get("2fa").getAsBoolean();
+    }
+
+    public static void setTwoFactorEnabled(String username, Boolean value) {
+        JsonObject user = getPlayer(username);
+        if (user == null) return;
+        user.addProperty("2fa", value);
+        saveDatabase();
+    }
+
+    public static String getHash(String username) {
+        JsonObject user = getPlayer(username);
+        if (user == null) return null;
+        return user.get("password").getAsString();
     }
 
     private static void convertDatabase(int version) {

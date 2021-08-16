@@ -6,6 +6,7 @@ import com.dqu.simplerauth.managers.DbManager;
 import com.dqu.simplerauth.managers.LangManager;
 import com.dqu.simplerauth.PlayerObject;
 import com.dqu.simplerauth.api.event.PlayerAuthEvents;
+import com.dqu.simplerauth.managers.TwoFactorManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -22,9 +23,45 @@ public class LoginCommand {
     public static void registerCommand(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(literal("login")
             .then(argument("password", StringArgumentType.word())
-                .executes(ctx -> login(ctx))
+                    .executes(ctx -> {
+                        String username = ctx.getSource().getPlayer().getEntityName();
+                        if (!DbManager.getTwoFactorEnabled(username)) {
+                            return login(ctx);
+                        } else if (DbManager.getUseOnlineAuth(username)) return loginCode(ctx);
+                        ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.2fa.enter"), false);
+                        return 0;
+                    })
+                    .then(argument("code", StringArgumentType.word()).executes(ctx -> {
+                        String username = ctx.getSource().getPlayer().getEntityName();
+                        String code = StringArgumentType.getString(ctx, "code");
+                        if (!DbManager.getTwoFactorEnabled(username)) {
+                            return login(ctx);
+                        }
+                        return login(ctx, code);
+                    }))
             )
         );
+    }
+
+    private static int loginCode(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
+        String code = StringArgumentType.getString(ctx, "password");
+        ServerPlayerEntity player = ctx.getSource().getPlayer();
+        if (TwoFactorManager.validate(player, code)) {
+            PlayerObject playerObject = AuthMod.playerManager.get(player);
+            PlayerAuthEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player, "loginCommand");
+            playerObject.authenticate();
+            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.authenticated"), false);
+            return 1;
+        } else {
+            ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.2fa.incorrect"), false);
+            return 0;
+        }
+    }
+
+    private static int login(CommandContext<ServerCommandSource> ctx, String pin) throws CommandSyntaxException {
+        if (TwoFactorManager.validate(ctx.getSource().getPlayer(), pin)) {
+            return login(ctx);
+        } else throw new SimpleCommandExceptionType(LangManager.getLiteralText("command.general.2fa.incorrect")).create();
     }
 
     private static int login(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {

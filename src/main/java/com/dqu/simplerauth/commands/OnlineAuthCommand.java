@@ -77,6 +77,10 @@ public class OnlineAuthCommand {
                 DbManager.setUseOnlineAuth(username, true);
                 OnOnlineAuthChanged.onEnabled(player);
                 source.sendFeedback(LangManager.getLiteralText("command.onlineauth.enabled"), false);
+                if (DbManager.getTwoFactorEnabled(username)) {
+                    DbManager.setTwoFactorEnabled(username, false);
+                    source.sendFeedback(LangManager.getLiteralText("command.2fa.changed"), false);
+                }
             } else {
                 source.sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);
             }
@@ -106,6 +110,10 @@ public class OnlineAuthCommand {
                 DbManager.setUseOnlineAuth(username, false);
                 OnOnlineAuthChanged.onDisabled(player);
                 source.sendFeedback(LangManager.getLiteralText("command.onlineauth.disabled"), false);
+                if (DbManager.getTwoFactorEnabled(username)) {
+                    DbManager.setTwoFactorEnabled(username, false);
+                    source.sendFeedback(LangManager.getLiteralText("command.2fa.changed"), false);
+                }
             } else {
                 source.sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);
             }
