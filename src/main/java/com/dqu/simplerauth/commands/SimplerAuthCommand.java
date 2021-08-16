@@ -48,8 +48,7 @@ public class SimplerAuthCommand {
                                     if (!ctx.getSource().hasPermissionLevel(4)) return 0;
                                     String username = StringArgumentType.getString(ctx, "player");
 
-                                    ServerPlayerEntity player = ctx.getSource().getServer().getPlayerManager().getPlayer(username);
-                                    if (player == null) {
+                                    if (!DbManager.isPlayerRegistered(username)) {
                                         throw new SimpleCommandExceptionType(LangManager.getLiteralText("player.invalid_username")).create();
                                     }
 
