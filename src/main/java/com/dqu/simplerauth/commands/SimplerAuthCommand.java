@@ -9,7 +9,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -53,7 +52,7 @@ public class SimplerAuthCommand {
                                     }
 
                                     DbManager.setUseOnlineAuth(username, false);
-                                    OnOnlineAuthChanged.onDisabled(player);
+                                    OnOnlineAuthChanged.onDisabled(ctx.getSource().getPlayer());
                                     ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.success"), false);
                                     return 1;
                                 })
