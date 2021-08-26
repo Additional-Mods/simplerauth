@@ -108,6 +108,7 @@ public class DbManager {
 
         if (sip == null || stimestamp == null) return false; // for compatibility with 1.1.x
         if (!sip.getAsString().equals(ip)) return false;
+        if (!ConfigManager.getAuthType().equals("2fa") && DbManager.getTwoFactorEnabled(username)) return false;
 
         LocalDateTime parsed;
         try {

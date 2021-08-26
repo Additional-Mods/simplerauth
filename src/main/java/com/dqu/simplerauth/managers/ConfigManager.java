@@ -38,6 +38,7 @@ public class ConfigManager {
             db.addProperty("prevent-logging-another-location", true);
             db.addProperty("hide-position", false);
             db.addProperty("portal-teleport", true);
+            db.addProperty("optional-2fa", true);
             db.add("forced-offline-users", new JsonArray());
 
             saveDatabase();
@@ -118,6 +119,7 @@ public class ConfigManager {
     public static String getAuthType() {
         String authtype = getString("password-type");
         if (authtype.equalsIgnoreCase("local")) return "local";
+        if (authtype.equalsIgnoreCase("2fa")) return "2fa";
         return authtype.equalsIgnoreCase("global") ? "global" : "none";
     }
 
@@ -171,7 +173,8 @@ public class ConfigManager {
                 db.addProperty("version", 6);
             }
             case 6 -> {
-                db.addProperty("portal-teleport", true);
+                db.addProperty("portal-teleport", !db.get("hide-position").getAsBoolean());
+                db.addProperty("optional-2fa", true);
                 db.addProperty("version", VERSION);
             }
         }

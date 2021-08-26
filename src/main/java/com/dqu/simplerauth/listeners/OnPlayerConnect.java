@@ -3,10 +3,7 @@ package com.dqu.simplerauth.listeners;
 import com.dqu.simplerauth.AuthMod;
 import com.dqu.simplerauth.PlayerObject;
 import com.dqu.simplerauth.api.event.PlayerAuthEvents;
-import com.dqu.simplerauth.managers.CacheManager;
-import com.dqu.simplerauth.managers.ConfigManager;
-import com.dqu.simplerauth.managers.DbManager;
-import com.dqu.simplerauth.managers.LangManager;
+import com.dqu.simplerauth.managers.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -53,6 +50,11 @@ public class OnPlayerConnect {
             return;
         }
 
+        if (ConfigManager.getAuthType().equals("2fa") && !DbManager.getTwoFactorEnabled(player.getEntityName())) {
+            playerObject.authenticate();
+            return;
+        }
+
         if (ConfigManager.getBoolean("sessions-enabled")) {
             if (DbManager.sessionVerify(player.getEntityName(), player.getIp())) {
                 playerObject.authenticate();
@@ -67,7 +69,11 @@ public class OnPlayerConnect {
 
         player.setInvulnerable(true);
         player.stopRiding();
-        player.sendMessage(LangManager.getLiteralText("player.connect.authenticate"), false);
+        if (ConfigManager.getAuthType().equals("2fa")) {
+            player.sendMessage(LangManager.getLiteralText("player.connect.authenticate.2fa"), false);
+        } else {
+            player.sendMessage(LangManager.getLiteralText("player.connect.authenticate"), false);
+        }
 
         if (ConfigManager.getBoolean("hide-position") && DbManager.isPlayerRegistered(player.getEntityName())) {
             if (player.getX() > -1 && player.getX() < 1 && player.getZ() > -1 && player.getZ() < 1 && player.getY() < 1)

@@ -24,6 +24,10 @@ public class ChangePasswordCommand {
                         String username = player.getEntityName();
                         String authtype = ConfigManager.getAuthType();
 
+                        if (authtype.equals("2fa")) {
+                            return 0;
+                        }
+
                         if (authtype.equals("global")) {
                             if (player.hasPermissionLevel(4)) {
                                 // If a player is an operator, and the password type is global - change the global password

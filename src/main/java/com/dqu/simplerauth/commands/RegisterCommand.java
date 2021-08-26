@@ -33,11 +33,12 @@ public class RegisterCommand {
 
     private static int register(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
         String authtype = ConfigManager.getAuthType();
-        
-        if (authtype.equals("global")) {
-            throw new SimpleCommandExceptionType(LangManager.getLiteralText("command.register.globaltype")).create();
-        } else if (authtype.equals("none")) {
+
+        if (authtype.equals("none")) {
             throw new SimpleCommandExceptionType(LangManager.getLiteralText("config.incorrect")).create();
+        }
+        if (!authtype.equals("local")) {
+            throw new SimpleCommandExceptionType(LangManager.getLiteralText("command.register.globaltype")).create();
         }
         
         ServerPlayerEntity player = ctx.getSource().getPlayer();

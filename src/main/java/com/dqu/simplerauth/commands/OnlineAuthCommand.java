@@ -132,7 +132,7 @@ public class OnlineAuthCommand {
         String authtype = ConfigManager.getAuthType();
         boolean optionalOnlineAuth = ConfigManager.getBoolean("optional-online-auth");
 
-        if (authtype.equals("global")) {
+        if (!authtype.equals("local")) {
             source.sendFeedback(LangManager.getLiteralText("command.onlineauth.globaltype"), false);
             return true;
         } else if (!optionalOnlineAuth) {
