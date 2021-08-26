@@ -1,6 +1,7 @@
 package com.dqu.simplerauth.commands;
 
 import com.dqu.simplerauth.AuthMod;
+import com.dqu.simplerauth.api.event.PlayerAuthEvents;
 import com.dqu.simplerauth.listeners.OnOnlineAuthChanged;
 import com.dqu.simplerauth.managers.ConfigManager;
 import com.dqu.simplerauth.managers.DbManager;
@@ -80,7 +81,9 @@ public class OnlineAuthCommand {
                 if (DbManager.getTwoFactorEnabled(username)) {
                     DbManager.setTwoFactorEnabled(username, false);
                     source.sendFeedback(LangManager.getLiteralText("command.2fa.changed"), false);
+                    PlayerAuthEvents.PLAYER_ACCOUNT_MODIFIED.invoker().onPlayerAccountModified(player, "2fa", "false");
                 }
+                PlayerAuthEvents.PLAYER_ACCOUNT_MODIFIED.invoker().onPlayerAccountModified(player, "onlineAuth", "true");
             } else {
                 source.sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);
             }
@@ -113,7 +116,9 @@ public class OnlineAuthCommand {
                 if (DbManager.getTwoFactorEnabled(username)) {
                     DbManager.setTwoFactorEnabled(username, false);
                     source.sendFeedback(LangManager.getLiteralText("command.2fa.changed"), false);
+                    PlayerAuthEvents.PLAYER_ACCOUNT_MODIFIED.invoker().onPlayerAccountModified(player, "2fa", "false");
                 }
+                PlayerAuthEvents.PLAYER_ACCOUNT_MODIFIED.invoker().onPlayerAccountModified(player, "onlineAuth", "false");
             } else {
                 source.sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);
             }

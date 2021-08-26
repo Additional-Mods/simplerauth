@@ -1,11 +1,8 @@
 package com.dqu.simplerauth.commands;
 
-import com.dqu.simplerauth.AuthMod;
-import com.dqu.simplerauth.PlayerObject;
 import com.dqu.simplerauth.api.event.PlayerAuthEvents;
 import com.dqu.simplerauth.managers.DbManager;
 import com.dqu.simplerauth.managers.LangManager;
-import com.dqu.simplerauth.managers.PlayerManager;
 import com.dqu.simplerauth.managers.TwoFactorManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -74,6 +71,7 @@ public class TwoFactorCommand {
 
                                     DbManager.setTwoFactorEnabled(username, true);
                                     ctx.getSource().sendFeedback(LangManager.getLiteralText("command.2fa.enabled"), false);
+                                    PlayerAuthEvents.PLAYER_ACCOUNT_MODIFIED.invoker().onPlayerAccountModified(player, "2fa", "true");
                                     return 1;
                                 }))
                         )
@@ -94,6 +92,7 @@ public class TwoFactorCommand {
 
                     DbManager.setTwoFactorEnabled(username, false);
                     ctx.getSource().sendFeedback(LangManager.getLiteralText("command.2fa.disabled"), false);
+                    PlayerAuthEvents.PLAYER_ACCOUNT_MODIFIED.invoker().onPlayerAccountModified(player, "2fa", "false");
                     return 1;
                 })))
         );

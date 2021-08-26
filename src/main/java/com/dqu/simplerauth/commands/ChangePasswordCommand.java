@@ -1,5 +1,6 @@
 package com.dqu.simplerauth.commands;
 
+import com.dqu.simplerauth.api.event.PlayerAuthEvents;
 import com.dqu.simplerauth.managers.ConfigManager;
 import com.dqu.simplerauth.managers.DbManager;
 import com.dqu.simplerauth.managers.LangManager;
@@ -49,9 +50,11 @@ public class ChangePasswordCommand {
                         DbManager.setPassword(username, newPassword);
                         ctx.getSource().sendFeedback(LangManager.getLiteralText("command.changepassword.success"), false);
                         if (DbManager.getTwoFactorEnabled(username)) {
+                            PlayerAuthEvents.PLAYER_ACCOUNT_MODIFIED.invoker().onPlayerAccountModified(player, "2fa", "false");
                             DbManager.setTwoFactorEnabled(username, false);
                             ctx.getSource().sendFeedback(LangManager.getLiteralText("command.2fa.changed"), false);
                         }
+                        PlayerAuthEvents.PLAYER_ACCOUNT_MODIFIED.invoker().onPlayerAccountModified(player, "password", null);
                         return 1;
 
                     })

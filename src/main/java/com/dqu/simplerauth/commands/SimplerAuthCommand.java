@@ -1,5 +1,6 @@
 package com.dqu.simplerauth.commands;
 
+import com.dqu.simplerauth.api.event.PlayerAuthEvents;
 import com.dqu.simplerauth.listeners.OnOnlineAuthChanged;
 import com.dqu.simplerauth.managers.CacheManager;
 import com.dqu.simplerauth.managers.ConfigManager;
@@ -36,6 +37,7 @@ public class SimplerAuthCommand {
                             String username = StringArgumentType.getString(ctx, "player");
                             DbManager.unregister(username);
                             ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.success"), false);
+                            PlayerAuthEvents.PLAYER_ACCOUNT_MODIFIED.invoker().onPlayerAccountModified(ctx.getSource().getPlayer(), "unregister", null);
                             return 1;
                         })
                     )
