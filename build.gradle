@@ -83,5 +83,13 @@ publishing {
 		// Notice: This block does NOT have the same function as the block in the top level.
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
+		maven {
+			name = "GitHubPackages"
+			url = uri("https://maven.pkg.github.com/Dqu1J/simplerauth")
+			credentials {
+				username = System.getenv("GH_ACTOR")
+				password = System.getenv("GH_TOKEN")
+			}
+		}
 	}
 }
