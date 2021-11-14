@@ -10,7 +10,7 @@ import com.mojang.authlib.ProfileLookupCallback;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerConfigHandler;
-import net.minecraft.util.ChatUtil;
+import net.minecraft.util.StringHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,7 +34,7 @@ public class ServerConfigHandlerMixin {
         ci.cancel();
         List<String> onlineBannedPlayers = Lists.newArrayList();
         for (String player : bannedPlayers) {
-            if (!ChatUtil.isEmpty(player)) {
+            if (!StringHelper.isEmpty(player)) {
                 boolean onlinePlayer = forcedOnlineAuth ? AuthMod.doesMinecraftAccountExist(player) : DbManager.getUseOnlineAuth(player);
                 if (onlinePlayer) onlineBannedPlayers.add(player);
                 else {

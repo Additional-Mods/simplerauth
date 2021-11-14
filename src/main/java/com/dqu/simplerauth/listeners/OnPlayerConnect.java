@@ -81,7 +81,7 @@ public class OnPlayerConnect {
             DbManager.savePosition(player.getEntityName(), player.getPos());
             player.requestTeleport(0, 0, 0);
         } else if (ConfigManager.getBoolean("portal-teleport")) { // Not needed when player is in the void
-            if (player.getServerWorld().getBlockState(player.getBlockPos()).isOf(Blocks.NETHER_PORTAL)) {
+            if (player.getWorld().getBlockState(player.getBlockPos()).isOf(Blocks.NETHER_PORTAL)) {
                 teleportPlayerAway(player);
             }
         }
@@ -90,7 +90,7 @@ public class OnPlayerConnect {
     public static void teleportPlayerAway(ServerPlayerEntity player) {
         // Modified ChorusFruitItem#finishUsing
         boolean teleported = false;
-        ServerWorld world = player.getServerWorld();
+        ServerWorld world = player.getWorld();
         while (!teleported) {
             double x = player.getX() + (player.getRandom().nextDouble() - 0.5D) * 16.0D;
             double y = MathHelper.clamp(player.getY() + (double)(player.getRandom().nextInt(16) - 8), world.getBottomY(), world.getBottomY() + world.getLogicalHeight() - 1);
