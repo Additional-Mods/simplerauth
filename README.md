@@ -31,9 +31,10 @@ Until player logins, it won't be able to:
 - ...and more!
 
 **Version Support**
-- ![](https://img.shields.io/badge/1.17.x-Supported-green)
-- ![](https://img.shields.io/badge/1.16.5-Not%20Supported-important)
-- ![](https://img.shields.io/badge/1.16.4%3C-Not%20ported-red)
+- ![](https://img.shields.io/badge/1.18.x-Supported-green)
+- ![](https://img.shields.io/badge/1.17.x-Not%20Supported-red)
+- ![](https://img.shields.io/badge/1.16.5-Not%20Supported-red)
+- ![](https://img.shields.io/badge/1.16.4%3C-Not%20Suported-red)
 
 [Modrinth](https://modrinth.com/mod/simpler-auth)
 [CurseForge](https://www.curseforge.com/minecraft/mc-mods/simpler-auth)

@@ -1,9 +1,13 @@
 package com.dqu.simplerauth.listeners;
 
 import com.dqu.simplerauth.AuthMod;
+import com.dqu.simplerauth.CarpetHelper;
 import com.dqu.simplerauth.PlayerObject;
 import com.dqu.simplerauth.api.event.PlayerAuthEvents;
-import com.dqu.simplerauth.managers.*;
+import com.dqu.simplerauth.managers.CacheManager;
+import com.dqu.simplerauth.managers.ConfigManager;
+import com.dqu.simplerauth.managers.DbManager;
+import com.dqu.simplerauth.managers.LangManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -27,6 +31,13 @@ public class OnPlayerConnect {
     public static void listen(ServerPlayerEntity player) {
         PlayerObject playerObject = AuthMod.playerManager.get(player);
         playerObject.updatePlayer(player);
+
+        if (CarpetHelper.isPlayerFake(player)) {
+            playerObject.authenticate();
+            AuthMod.LOGGER.info(player.getEntityName() + " is a bot, authentication skipped.");
+            PlayerAuthEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player, "bot");
+            return;
+        }
 
         if (!player.hasPermissionLevel(ConfigManager.getInt("require-auth-permission-level"))) {
             playerObject.authenticate();
