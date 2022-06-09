@@ -21,7 +21,7 @@ public class TwoFactorCommand {
     public static void registerCommand(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(literal("2fa")
                 .executes(ctx -> {
-                    ServerPlayerEntity player = ctx.getSource().getPlayer();
+                    ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
                     String message = DbManager.getTwoFactorEnabled(player.getEntityName()) ? "command.2fa.disable" : "command.2fa.enable";
                     ctx.getSource().sendFeedback(LangManager.getLiteralText(message), false);
                     return 1;
@@ -56,7 +56,7 @@ public class TwoFactorCommand {
         if (stage == 1) {
             if (ConfigManager.getAuthType().equals("2fa")) return validate(ctx, 1);
         }
-        ServerPlayerEntity player = ctx.getSource().getPlayer();
+        ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
         String username = player.getEntityName();
         boolean shouldCheckPassword = (stage == 0) && !ConfigManager.getAuthType().equals("2fa");
         if (DbManager.getTwoFactorEnabled(username)) {
@@ -74,7 +74,7 @@ public class TwoFactorCommand {
     }
 
     private static int validate(CommandContext<ServerCommandSource> ctx, int stage) throws CommandSyntaxException {
-        ServerPlayerEntity player = ctx.getSource().getPlayer();
+        ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
         String username = player.getEntityName();
         if (stage == 0 && !DbManager.isPasswordCorrect(username, StringArgumentType.getString(ctx, "string"))) {
             ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);
@@ -93,7 +93,7 @@ public class TwoFactorCommand {
     }
 
     private static int disable(CommandContext<ServerCommandSource> ctx, int stage) throws CommandSyntaxException {
-        ServerPlayerEntity player = ctx.getSource().getPlayer();
+        ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
         String username = player.getEntityName();
         if (stage == 1 && !DbManager.isPasswordCorrect(username, StringArgumentType.getString(ctx, "password"))) {
             ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.notmatch"), false);

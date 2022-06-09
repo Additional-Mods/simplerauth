@@ -5,7 +5,7 @@ import com.dqu.simplerauth.managers.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.net.ssl.HttpsURLConnection;
@@ -26,7 +26,7 @@ public class AuthMod implements ModInitializer {
         DbManager.loadDatabase();
         CacheManager.loadCache();
         LangManager.loadTranslations(ConfigManager.getString("language"));
-        CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
+        CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated, environment) -> {
             LoginCommand.registerCommand(dispatcher);
             RegisterCommand.registerCommand(dispatcher);
             ChangePasswordCommand.registerCommand(dispatcher);

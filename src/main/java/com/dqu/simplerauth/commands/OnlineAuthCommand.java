@@ -20,7 +20,7 @@ public class OnlineAuthCommand {
         dispatcher.register(literal("onlineauth")
                 .executes(ctx -> {
                     ServerCommandSource source = ctx.getSource();
-                    ServerPlayerEntity player = source.getPlayer();
+                    ServerPlayerEntity player = source.getPlayerOrThrow();
                     executeEnable(player, source, null);
                     return 1;
                 })
@@ -29,7 +29,7 @@ public class OnlineAuthCommand {
                                 .executes(ctx -> {
                                     String password = StringArgumentType.getString(ctx, "password");
                                     ServerCommandSource source = ctx.getSource();
-                                    ServerPlayerEntity player = source.getPlayer();
+                                    ServerPlayerEntity player = source.getPlayerOrThrow();
                                     executeEnable(player, source, password);
                                     return 1;
                                 })
@@ -38,7 +38,7 @@ public class OnlineAuthCommand {
                 .then(literal("disable")
                         .executes(ctx -> {
                             ServerCommandSource source = ctx.getSource();
-                            ServerPlayerEntity player = source.getPlayer();
+                            ServerPlayerEntity player = source.getPlayerOrThrow();
                             executeDisable(player, source, null);
                             return 1;
                         })
@@ -46,7 +46,7 @@ public class OnlineAuthCommand {
                                 .executes(ctx -> {
                                     String password = StringArgumentType.getString(ctx, "password");
                                     ServerCommandSource source = ctx.getSource();
-                                    ServerPlayerEntity player = source.getPlayer();
+                                    ServerPlayerEntity player = source.getPlayerOrThrow();
                                     executeDisable(player, source, password);
                                     return 1;
                                 })

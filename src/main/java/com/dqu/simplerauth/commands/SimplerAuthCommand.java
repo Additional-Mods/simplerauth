@@ -37,7 +37,7 @@ public class SimplerAuthCommand {
                             String username = StringArgumentType.getString(ctx, "player");
                             DbManager.unregister(username);
                             ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.success"), false);
-                            PlayerAuthEvents.PLAYER_ACCOUNT_MODIFIED.invoker().onPlayerAccountModified(ctx.getSource().getPlayer(), "unregister", null);
+                            PlayerAuthEvents.PLAYER_ACCOUNT_MODIFIED.invoker().onPlayerAccountModified(ctx.getSource().getPlayerOrThrow(), "unregister", null);
                             return 1;
                         })
                     )
@@ -54,7 +54,7 @@ public class SimplerAuthCommand {
                                     }
 
                                     DbManager.setUseOnlineAuth(username, false);
-                                    OnOnlineAuthChanged.onDisabled(ctx.getSource().getPlayer());
+                                    OnOnlineAuthChanged.onDisabled(ctx.getSource().getPlayerOrThrow());
                                     ctx.getSource().sendFeedback(LangManager.getLiteralText("command.general.success"), false);
                                     return 1;
                                 })
