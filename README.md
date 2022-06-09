@@ -31,6 +31,7 @@ Until player logins, it won't be able to:
 - ...and more!
 
 **Version Support**
+- ![](https://img.shields.io/badge/1.19.x-Supported-green)
 - ![](https://img.shields.io/badge/1.18.x-Supported-green)
 - ![](https://img.shields.io/badge/1.17.x-Not%20Supported-red)
 - ![](https://img.shields.io/badge/1.16.5-Not%20Supported-red)
