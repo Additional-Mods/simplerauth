@@ -2,6 +2,7 @@
 package com.dqu.simplerauth;
 
 import carpet.patches.EntityPlayerMPFake;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class CarpetHelper {
@@ -12,6 +13,8 @@ public class CarpetHelper {
      * @return true if it's fake, otherwise false
      */
     public static boolean isPlayerFake(PlayerEntity player) {
-        return player instanceof EntityPlayerMPFake;
+        if (FabricLoader.getInstance().isModLoaded("carpet")) {
+            return player instanceof EntityPlayerMPFake;
+        } else return false;
     }
 }
