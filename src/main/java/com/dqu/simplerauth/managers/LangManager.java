@@ -4,7 +4,8 @@ import com.dqu.simplerauth.AuthMod;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -15,8 +16,8 @@ public class LangManager {
     private static JsonObject lang = new JsonObject();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public static LiteralText getLiteralText(String key) {
-        return new LiteralText(get(key));
+    public static MutableText getLiteralText(String key) {
+        return Text.literal(get(key));
     }
 
     public static String get(String key) {

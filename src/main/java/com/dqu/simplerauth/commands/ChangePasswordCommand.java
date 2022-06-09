@@ -20,7 +20,7 @@ public class ChangePasswordCommand {
                     .executes(ctx -> {
                         String oldPassword = StringArgumentType.getString(ctx, "oldPassword");
                         String newPassword = StringArgumentType.getString(ctx, "newPassword");
-                        ServerPlayerEntity player = ctx.getSource().getPlayer();
+                        ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
                         String username = player.getEntityName();
                         String authtype = ConfigManager.getAuthType();
 

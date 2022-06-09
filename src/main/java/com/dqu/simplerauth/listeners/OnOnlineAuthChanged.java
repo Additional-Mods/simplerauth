@@ -4,9 +4,9 @@ import com.dqu.simplerauth.AuthMod;
 import com.dqu.simplerauth.managers.CacheManager;
 import com.google.gson.JsonObject;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.*;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.dynamic.DynamicSerializableUuid;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -67,7 +67,7 @@ public class OnOnlineAuthChanged {
         PlayerManager playerManager = server.getPlayerManager();
 
         // Update uuids
-        UUID offlineUuid = PlayerEntity.getOfflinePlayerUuid(username);
+        UUID offlineUuid = DynamicSerializableUuid.getOfflinePlayerUuid(username);
         GameProfile offlineProfile = new GameProfile(offlineUuid, username);
         GameProfile onlineProfile = player.getGameProfile(); // The player is online when this is executed
 
