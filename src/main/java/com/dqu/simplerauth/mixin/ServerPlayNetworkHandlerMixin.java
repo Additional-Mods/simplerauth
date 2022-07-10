@@ -2,16 +2,13 @@ package com.dqu.simplerauth.mixin;
 
 import com.dqu.simplerauth.listeners.OnClickSlot;
 import com.dqu.simplerauth.listeners.OnGameMessage;
+import com.dqu.simplerauth.listeners.OnCommandExecution;
 import com.dqu.simplerauth.listeners.OnPlayerAction;
 import com.dqu.simplerauth.listeners.OnPlayerMove;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
-import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
-import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.network.packet.c2s.play.*;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -64,6 +61,13 @@ public abstract class ServerPlayNetworkHandlerMixin {
     @Inject(method = "onChatMessage", at = @At("HEAD"), cancellable = true)
     public void onChatMessage(ChatMessageC2SPacket packet, CallbackInfo ci) {
         if (!OnGameMessage.canSendMessage(this.player, packet.getChatMessage())) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "onCommandExecution", at = @At("HEAD"), cancellable = true)
+    public void onCommandExecution(CommandExecutionC2SPacket packet, CallbackInfo ci) {
+        if (!OnCommandExecution.canSendCommand(this.player, packet.command())) {
             ci.cancel();
         }
     }
